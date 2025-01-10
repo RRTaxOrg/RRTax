@@ -1,3 +1,12 @@
+/* 
+This is the main gome page of the app
+this is just the home page we can have multiple pages in the app
+
+*/
+
+
+"use client";
+
 import Image from "next/image";
 
 export default function Home() {

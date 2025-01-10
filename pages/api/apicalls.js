@@ -1,0 +1,5 @@
+/* 
+in this file we make all the api calls
+This is the backend and connects to the frontend i.e the app folder
+the app folder sends requests to the api folder and the api folder sends responses back to the app folder
+*/
