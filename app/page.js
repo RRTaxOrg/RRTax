@@ -5,7 +5,7 @@ this is just the home page we can have multiple pages in the app
 */
 
 
-"use client";
+// "use client";
 
 import Image from "next/image";
 
