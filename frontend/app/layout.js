@@ -1,11 +1,3 @@
-/* 
-This is the layout file for the home page of the application.
-It defines the structure of the home page.
-*/
-
-
-// 'use client';
-
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
