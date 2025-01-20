@@ -2,7 +2,7 @@ This is the RRtax Website Project for EECS2311Z
 
 **Tech Stack**
 - Next.js - Frontend
-- Java server - Backend
+- Node.js - Backend
 - SQLite - Database
 
 **Todo**
