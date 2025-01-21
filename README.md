@@ -20,7 +20,7 @@ This is the RRtax Website Project for EECS2311Z
 ## Getting Started With The Project
 ## Go and install Node.js from the internet
 
-## 1> First make you own copy of the project by making a fork witch is like making a copy of the project on github. it can be done from the github repo
+## 1> First make you own copy of the project by making a fork which is like making a copy of the project on github. it can be done from the github repo
 - Fork the repo then open it in your IDE VS code is recommended
 
 ## 2> Then open the project in your IDE open the terminal and to run the project do the following
