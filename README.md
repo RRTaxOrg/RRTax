@@ -1,5 +1,8 @@
 This is the RRtax Website Project for EECS2311Z
 
+**ITR0**
+Link to Youtube video of exploratory meeting with the client: https://youtu.be/inh3fe45IU8
+
 **Tech Stack**
 - Next.js - Frontend
 - Node.js - Backend
