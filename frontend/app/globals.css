@@ -81,7 +81,7 @@ main {
 
 /* Carousel Styles */
 .carousel-container {
-  width: 500px;
+  width: 1500px;
   height: 500px; /* Or whatever width you want */
   margin: 0 auto; /* Center the carousel */
   position: relative; /* Needed for absolute positioning of images */
@@ -106,6 +106,14 @@ main {
 
 .carousel img.active {
   opacity: 1;
+}
+
+.active {
+  display: block;
+}
+
+.hidden {
+  display: none;
 }
 
 footer {
