@@ -100,8 +100,9 @@ async function removeSession(authkey) {
   var sessions = await getSessions();
   for (var i = 0; i < sessions.length; i++) {
     if (sessions[i]["authkey"] == authkey) {
-      sessions.pop(i);
+      sessions.splice(i, 1);
       await pushSessions(sessions);
+      break;
     }
   }
 }
