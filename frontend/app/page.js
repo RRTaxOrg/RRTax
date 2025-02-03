@@ -20,15 +20,17 @@ export default function Home() {
       <div>
           <header>
               <nav>
+                  <Image src="/RRTax_logo.jpg" alt="Logo" width={200} height={200} />
                   <ul>
-                      <Image src="/RRTax_logo.jpg" alt="Logo" width={200} height={200} />
+                      
                       <li><a href="#home" onClick={() => { setActiveTab('home'); setShowLogin(false); }}>Home</a></li>
                       <li><a href="#about" onClick={() => { setActiveTab('about'); setShowLogin(false); }}>About Us</a></li>
                       <li><a href="#services" onClick={() => { setActiveTab('services'); setShowLogin(false); }}>Services</a></li>
                       <li><a href="#resources" onClick={() => { setActiveTab('resources'); setShowLogin(false); }}>Resources</a></li>
                       <li><a href="#contactus" onClick={() => { setActiveTab('contactus'); setShowLogin(false); }}>Contact Us</a></li>
-                      <button className="login-btn" onClick={() => setShowLogin(true)}>Login</button>
+                      
                   </ul>
+                  <button className="login-btn" onClick={() => setShowLogin(true)}>Login</button>
               </nav>
           </header>
 
@@ -36,31 +38,32 @@ export default function Home() {
               {!showLogin ? (
                   <>
                       <section id="home" className={`tab-content ${activeTab === 'home' ? 'active' : 'hidden'}`}>
-                      <div className="flex justify-center items-center h-[400px] w-full relative">
+                      <div className="carousel-container">
+                          
                           <Image 
                             src="/Building1.jpg" 
                             alt="Image 1" 
-                            width={470} 
-                            height={425} 
+                            width={1548} 
+                            height={865} 
                             style={{ display: currentImageIndex === 0 ? 'block' : 'none' }} 
                           />
                           <Image 
                             src="/Building2.jpg" 
                             alt="Image 2" 
-                            width={630} 
-                            height={190} 
+                            width={1548} 
+                            height={865} 
                             style={{ display: currentImageIndex === 1 ? 'block' : 'none' }} 
                           />
                           <Image 
                             src="/Building3.jpg" 
                             alt="Image 3" 
-                            width={540} 
-                            height={124} 
+                            width={1548} 
+                            height={865}  
                             style={{ display: currentImageIndex === 2 ? 'block' : 'none' }} 
                           />
                       </div>
                       <div className="body">
-                        <br></br>
+                        
                         <br></br>
                         <h1><strong>Our Mission</strong></h1>
                         <br></br>
@@ -91,14 +94,15 @@ export default function Home() {
                         <p>We also assist with budgeting, cash flow management, and strategic planning to 
                           ensure your financial health stays on track.
                         </p>
-                        <p>Whether you’re an individual, a small business owner, or an entrepreneur, we're here 
+                        <br></br>
+                        <p>Whether you're an individual, a small business owner, or an entrepreneur, we're here 
                           to simplify your finances and help you achieve your goals.
                         </p>
                         <br></br>
                         <br></br>
                       </div>
                       <footer>
-                        <p>© 2025 My Website</p>
+                        <p>© 2025 RRTax Incorporated</p>
                       </footer>
 
                       </section>
@@ -134,7 +138,7 @@ export default function Home() {
                         <br></br>
                       </div>
                       <footer>
-                        <p>© 2025 My Website</p>
+                        <p>© 2025 RRTax Incorporated</p>
                       </footer>
                       </section>
                   </>
