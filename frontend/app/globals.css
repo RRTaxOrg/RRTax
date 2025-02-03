@@ -16,11 +16,19 @@
 /* style.css */
 body {
   font-family: sans-serif; /* Choose a modern font */
+  font-size: large;
   margin: 0;
   background-color: #F6F4F0; /* Background color from palette */
   color: #2E5077; /* Primary text color from palette */
 }
 
+body h1 {
+  font-family: Helvetica; /* Choose a modern font */
+  font-size: xx-large;
+  font-style: oblique;
+  color: #2E5077;
+
+}
 header {
   background-color: #4DA1A9; /* Header background from palette */
   padding: 1rem 0;
@@ -28,9 +36,10 @@ header {
 
 nav ul {
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: 5;
+  padding: 2;
   display: flex;
+  text-align: center;
   justify-content: center; /* Center the navigation links */
 }
 
