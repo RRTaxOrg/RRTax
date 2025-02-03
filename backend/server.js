@@ -23,7 +23,7 @@ const {
 // Gets salt for a user password based off of an email
 // Return codes: 0 - salt retrieved successfully (returns salt under "salt" aswell), 1 - email not found
 app.get("/salt/", async function(req, res){
-    var payload = req.query;
+    var payload = req.body;
 
     var user = getRow("./databases/main.db", "users", {email: payload.email});
 
@@ -31,14 +31,14 @@ app.get("/salt/", async function(req, res){
         res.send(JSON.stringify({code: "1"}));
     }
     else {
-        res.send(JSON.stringify({code: "0", salt: user["salt"]}))
+        res.send(JSON.stringify({code: "0", salt: user.salt}))
     }
 })
 
 // Authenticates a user based off of email, and password fields
 // Return codes: 0 - user logged in successfully (returns token under "token" aswell), 1 - email not found, 2 - incorrect password
 app.get("/signin/", async function(req, res){
-    var payload = req.query;
+    var payload = req.body;
     
     var user = getRow("./databases/main.db", "users", {email: payload.email});
 
@@ -46,8 +46,8 @@ app.get("/signin/", async function(req, res){
         res.send(JSON.stringify({code: "1"}));
     }
     else {
-        if (user["password"] == payload.password) {
-            var token = await createSession(user["uid"]);
+        if (user.password == payload.password) {
+            var token = await createSession(user.uid);
             res.send(JSON.stringify({code: "0", token: token}));
         }
         else {
@@ -61,19 +61,18 @@ app.get("/signin/", async function(req, res){
 app.get("/signup/", async function(req, res){
     res.set("Content-Type", "application/json");
 
-    var payload = req.query;
+    var payload = req.body;
     
     var result = insertInto("./databases/main.db", "users", { email: payload.email, username: payload.username, password: payload.password, salt: payload.salt, data: payload.data});
-
-    if (result == "UNIQUE constraint failed: users.email") {
+    if (result.message == "UNIQUE constraint failed: users.email") {
         res.send(JSON.stringify({code: "1"}))
     }
-    else if (result == "UNIQUE constraint failed: users.username") {
+    else if (result.message == "UNIQUE constraint failed: users.username") {
         res.send(JSON.stringify({code: "2"}))
     }
     else {
         var user = getRow("./databases/main.db", "users", {email: payload.email});
-        var token = await createSession(user["uid"]);
+        var token = await createSession(user.uid);
         res.send(JSON.stringify({"code": "0", "token": token}))
     }
 })
@@ -81,8 +80,9 @@ app.get("/signup/", async function(req, res){
 // Log user out based off of token field
 // Return codes: 0
 app.get("/logout/", async function(req, res){
-    var payload = req.query;
-    removeSession(payload.token);
+    var payload = req.body;
+    console.log(payload.token);
+    await removeSession(payload.token);
     res.send(JSON.stringify({code: "0"}));
 })
 
