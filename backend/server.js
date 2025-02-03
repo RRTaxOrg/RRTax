@@ -21,9 +21,13 @@ const {
 } = require("./authentication/auth.js");
 
 // Gets salt for a user password based off of an email
-// Return codes: 0 - salt retrieved successfully (returns salt under "salt" aswell), 1 - email not found
+// Return codes: 0 - salt retrieved successfully (returns salt under "salt" aswell), 1 - email not found, 3 - Info missing
 app.get("/salt/", async function(req, res){
-    var payload = req.body;
+    var payload = req.query;
+
+    if (!payload.email) {
+        res.send(JSON.stringify({code: "3"}))
+    }
 
     var user = getRow("./databases/main.db", "users", {email: payload.email});
 
@@ -36,9 +40,13 @@ app.get("/salt/", async function(req, res){
 })
 
 // Authenticates a user based off of email, and password fields
-// Return codes: 0 - user logged in successfully (returns token under "token" aswell), 1 - email not found, 2 - incorrect password
+// Return codes: 0 - user logged in successfully (returns token under "token" aswell), 1 - email not found, 2 - incorrect password, 3 - Info missing
 app.get("/signin/", async function(req, res){
-    var payload = req.body;
+    var payload = req.query;
+
+    if (!(payload.email && payload.password)) {
+        res.send(JSON.stringify({code: "3"}))
+    }
     
     var user = getRow("./databases/main.db", "users", {email: payload.email});
 
@@ -57,11 +65,15 @@ app.get("/signin/", async function(req, res){
 })
 
 // Creates a new user based on email, username, password, salt, and data fields
-// Return codes: 0 - user created successfully (returns token under "token" aswell), 1 - email already in use, 2 - username already in use
+// Return codes: 0 - user created successfully (returns token under "token" aswell), 1 - email already in use, 2 - username already in use, 3 - Info missing
 app.get("/signup/", async function(req, res){
     res.set("Content-Type", "application/json");
 
-    var payload = req.body;
+    var payload = req.query;
+
+    if (!(payload.email && payload.username && payload.password && payload.salt && payload.data)) {
+        res.send(JSON.stringify({code: "3"}))
+    }
     
     var result = insertInto("./databases/main.db", "users", { email: payload.email, username: payload.username, password: payload.password, salt: payload.salt, data: payload.data});
     if (result.message == "UNIQUE constraint failed: users.email") {
@@ -78,9 +90,13 @@ app.get("/signup/", async function(req, res){
 })
 
 // Log user out based off of token field
-// Return codes: 0
+// Return codes: 0 success, 3 - Info missing
 app.get("/logout/", async function(req, res){
-    var payload = req.body;
+    if (!payload.token) {
+        res.send(JSON.stringify({code: "3"}))
+    }
+
+    var payload = req.query;
     console.log(payload.token);
     await removeSession(payload.token);
     res.send(JSON.stringify({code: "0"}));
