@@ -14,31 +14,76 @@ const {
     deleteRow,
 } = require("./sql.js");
 
-app.get("/signin/", function(req, res){
+const {
+    createSession,
+    authSession,
+    removeSession,
+} = require("./authentication/auth.js");
+
+// Gets salt for a user password based off of an email
+// Return codes: 0 - salt retrieved successfully (returns salt under "salt" aswell), 1 - email not found
+app.get("/salt/", async function(req, res){
     var payload = req.query;
-    
+
+    var user = getRow("./databases/main.db", "users", {email: payload.email});
+
+    if (!user) {
+        res.send(JSON.stringify({code: "1"}));
+    }
+    else {
+        res.send(JSON.stringify({code: "0", salt: user["salt"]}))
+    }
 })
 
-// Creates a new user based on email, username, password, and any other additional information
-// Return codes: 0 - user created successfully (returns token under "token" aswell), 1 - user already exists
-app.get("/signup/", function(req, res){
+// Authenticates a user based off of email, and password fields
+// Return codes: 0 - user logged in successfully (returns token under "token" aswell), 1 - email not found, 2 - incorrect password
+app.get("/signin/", async function(req, res){
+    var payload = req.query;
+    
+    var user = getRow("./databases/main.db", "users", {email: payload.email});
+
+    if (!user) {
+        res.send(JSON.stringify({code: "1"}));
+    }
+    else {
+        if (user["password"] == payload.password) {
+            var token = await createSession(user["uid"]);
+            res.send(JSON.stringify({code: "0", token: token}));
+        }
+        else {
+            res.send(JSON.stringify({code: "2"}));
+        }
+    }
+})
+
+// Creates a new user based on email, username, password, salt, and data fields
+// Return codes: 0 - user created successfully (returns token under "token" aswell), 1 - email already in use, 2 - username already in use
+app.get("/signup/", async function(req, res){
     res.set("Content-Type", "application/json");
 
     var payload = req.query;
     
-    var user = getRow("./databases/main.db", "users", {"email": payload.email});
+    var result = insertInto("./databases/main.db", "users", { email: payload.email, username: payload.username, password: payload.password, salt: payload.salt, data: payload.data});
 
-    if (!user) {
-        
+    if (result == "UNIQUE constraint failed: users.email") {
+        res.send(JSON.stringify({code: "1"}))
+    }
+    else if (result == "UNIQUE constraint failed: users.username") {
+        res.send(JSON.stringify({code: "2"}))
     }
     else {
-        res.send(JSON.stringify({"code": "1"}))
+        var user = getRow("./databases/main.db", "users", {email: payload.email});
+        var token = await createSession(user["uid"]);
+        res.send(JSON.stringify({"code": "0", "token": token}))
     }
 })
 
-app.get("/logout/", function(req, res){
+// Log user out based off of token field
+// Return codes: 0
+app.get("/logout/", async function(req, res){
     var payload = req.query;
-    
+    removeSession(payload.token);
+    res.send(JSON.stringify({code: "0"}));
 })
 
 app.listen(port, function(){
