@@ -40,22 +40,22 @@ export default function Home() {
                           <Image 
                             src="/Building1.jpg" 
                             alt="Image 1" 
-                            width={250} 
-                            height={250} 
+                            width={470} 
+                            height={425} 
                             style={{ display: currentImageIndex === 0 ? 'block' : 'none' }} 
                           />
                           <Image 
                             src="/Building2.jpg" 
                             alt="Image 2" 
-                            width={250} 
-                            height={250} 
+                            width={630} 
+                            height={190} 
                             style={{ display: currentImageIndex === 1 ? 'block' : 'none' }} 
                           />
                           <Image 
                             src="/Building3.jpg" 
                             alt="Image 3" 
-                            width={250} 
-                            height={250} 
+                            width={540} 
+                            height={124} 
                             style={{ display: currentImageIndex === 2 ? 'block' : 'none' }} 
                           />
                       </div>
