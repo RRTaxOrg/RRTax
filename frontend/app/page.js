@@ -1,4 +1,4 @@
-import logo from '../public/logo.png';
+import logo from '../public/Logo_Improved_bg_removed.png';
 import Image from "next/image"; // Image class
 
 export default function Login() {
