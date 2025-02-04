@@ -17,6 +17,16 @@ export default function Home() {
       return () => clearInterval(interval);
   }, []);
 
+  // Function to go to the next image
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 3);
+  };
+
+  // Function to go to the previous image
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + 3) % 3);
+  };
+
   return (
       <div>
           <header>
@@ -24,14 +34,14 @@ export default function Home() {
                   <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={200} height={200} />
                   <ul>
                       
-                      <li><a href="#home" onClick={() => { setActiveTab('home'); setShowLogin(false); }}>Home</a></li>
-                      <li><a href="#about" onClick={() => { setActiveTab('about'); setShowLogin(false); }}>About Us</a></li>
-                      <li><a href="#services" onClick={() => { setActiveTab('services'); setShowLogin(false); }}>Services</a></li>
-                      <li><a href="#resources" onClick={() => { setActiveTab('resources'); setShowLogin(false); }}>Resources</a></li>
-                      <li><a href="#contactus" onClick={() => { setActiveTab('contactus'); setShowLogin(false); }}>Contact Us</a></li>
+                      <li><a href="#home" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/ setActiveTab('home'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>Home</a></li>
+                      <li><a href="#about" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/ setActiveTab('about'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>About Us</a></li>
+                      <li><a href="#services" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/ setActiveTab('services'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>Services</a></li>
+                      <li><a href="#resources" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/setActiveTab('resources'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>Resources</a></li>
+                      <li><a href="#contactus" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/ setActiveTab('contactus'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>Contact Us</a></li>
                       
                   </ul>
-                  <button className="login-btn" onClick={() => setShowLogin(true)}>Login</button>
+                  <button className="login-btn" onClick={() => {setShowLogin(true); window.scrollTo(0, 0);  /* Scroll to top on click*/ }}>Login</button>
               </nav>
           </header>
 
@@ -40,28 +50,35 @@ export default function Home() {
                   <>
                       <section id="home" className={`tab-content ${activeTab === 'home' ? 'active' : 'hidden'}`}>
                       <div className="carousel-container">
-                          
-                          <Image 
-                            src="/Building1.jpg" 
-                            alt="Image 1" 
-                            width={1548} 
-                            height={865} 
-                            style={{ display: currentImageIndex === 0 ? 'block' : 'none' }} 
-                          />
-                          <Image 
-                            src="/Building2.jpg" 
-                            alt="Image 2" 
-                            width={1548} 
-                            height={865} 
-                            style={{ display: currentImageIndex === 1 ? 'block' : 'none' }} 
-                          />
-                          <Image 
-                            src="/Building3.jpg" 
-                            alt="Image 3" 
-                            width={1548} 
-                            height={865}  
-                            style={{ display: currentImageIndex === 2 ? 'block' : 'none' }} 
-                          />
+                            {/* Left Button */}
+                            <button className="carousel-button left" onClick={prevImage}>
+                              &#10094; {/* Left Arrow Symbol (‹) */}
+                            </button>
+                            <Image 
+                              src="/Building1.jpg" 
+                              alt="Image 1" 
+                              width={1548} 
+                              height={865} 
+                              style={{ display: currentImageIndex === 0 ? 'block' : 'none' }} 
+                            />
+                            <Image 
+                              src="/Building2.jpg" 
+                              alt="Image 2" 
+                              width={1548} 
+                              height={865} 
+                              style={{ display: currentImageIndex === 1 ? 'block' : 'none' }} 
+                            />
+                            <Image 
+                              src="/Building3.jpg" 
+                              alt="Image 3" 
+                              width={1548} 
+                              height={865}  
+                              style={{ display: currentImageIndex === 2 ? 'block' : 'none' }} 
+                            />
+                            {/* Right Button */}
+                            <button className="carousel-button right" onClick={nextImage}>
+                              &#10095; {/* Right Arrow Symbol (›) */}
+                            </button>        
                       </div>
                       <div className="body">
                         
@@ -204,7 +221,7 @@ export default function Home() {
 
 function Login() {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-customWhite">
+      <div className="flex items-center justify-center min-h-screen bg-customWhite mt-20">
         <div className="flex flex-col items-center w-full max-w-md space-y-8">
           <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={500} height={500} />
           <div className="w-full p-8 space-y-8 bg-white rounded-lg shadow-md">
@@ -217,5 +234,6 @@ function Login() {
           </div>
         </div>
       </div>
+      
     );
 }
