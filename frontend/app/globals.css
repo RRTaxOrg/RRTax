@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  /*--background: #ffffff;*/
+  --background: #4DA1A9;
   --foreground: #171717;
 }
 
@@ -13,28 +14,77 @@ body {
   font-size: large;
   margin: 0;
   /*margin-top: 50px;*/
+  background-color: #2E5077;
+  /*background-color: #F6F4F0;*/
+  /*color: #2E5077;*/
+  color: #ffff;
+  display: flex;
+  flex-direction: column; /* Ensures elements stack vertically */
+}
+
+body p {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+body h1 {
+  margin-left: 15px;
+  margin-right: 15px;
+  font-family: Helvetica; /* Choose a modern font */
+  font-size: xx-large;
+  font-style: oblique;
+  /*color: #2E5077;*/
+  color: #F6F4F0;
+
+}
+
+.prose {
+  margin-left: 15px;
+  margin-right: 15px;
+  font-family: sans-serif;
+  font-size: large;
+  margin: 0;
+  padding: 0;
+  width: fit-content(100%);
+  /*margin-top: 50px;*/
   background-color: #F6F4F0;
+  /*background-color: #F6F4F0;*/
+  /*color: #2E5077;*/
   color: #2E5077;
   display: flex;
   flex-direction: column; /* Ensures elements stack vertically */
 }
 
-body h1 {
+.prose h1 {
+  margin-left: 10px;
+  margin-right: 70px;
   font-family: Helvetica; /* Choose a modern font */
   font-size: xx-large;
   font-style: oblique;
+  /*color: #2E5077;*/
   color: #2E5077;
+  text-align: right;
+}
 
+.prose p {
+  margin-left: 15px;
+  margin-right: 15px;
+  text-align: left;
+}
+
+.bodyalt {
+  margin-top: 98px;
 }
 
 /* Header */
 header {
-  background-color: #4DA1A9;
+  background-color: #F6F4F0;
   padding: 1rem 0;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
+  opacity: 0.85;
 }
 
 nav {
@@ -73,8 +123,9 @@ nav a {
 }
 
 nav a:hover {
-  color: #2E5077;
-  background-color: #F6F4F0;
+  color: #F6F4F0;
+  /*background-color: #F6F4F0;*/
+  background-color: #2aa3da;
 }
 
 /* Ensure logo stays 20px from the left */
@@ -84,8 +135,10 @@ nav a:hover {
 
 /* Ensure login button stays 20px from the right */
 .login-btn {
-  background-color: #79D7BE;
-  color: #2E5077;
+  /*background-color: #79D7BE;*/
+  background-color: #2aa3da;
+  /*color: #2E5077;*/
+  color: #F6F4F0;
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
@@ -96,15 +149,16 @@ nav a:hover {
 }
 
 .login-btn:hover {
-  /*background-color: #4DA1A9;*/
-  background-color: #F6F4F0;
+  background-color: #2E5077;
+  color: #F6F4F0;
+  /*background-color: #F6F4F0;*/
 }
 
 /* Carousel Container (Directly Below Header) */
 .carousel-container {
   width: 100%;
   height: 900px; /* Adjust height as needed */
-  margin-top: 50px; /* Pushes it below the fixed header */
+  margin-top: 98px; /* Pushes it below the fixed header */
   position: relative;
   overflow: hidden;
   display: flex;
@@ -162,7 +216,7 @@ nav a:hover {
 
 /* Main Content (Starts Below Carousel) */
 main {
-  padding: 2rem;
+  padding: 0;
   margin-top: 30px; /* Moves main content below the carousel */
 }
 
@@ -174,9 +228,49 @@ main {
   display: block;
 }
 
+.background-section {
+  position: relative; /* Needed for absolute positioning of the circle */
+  background-image: url('/Background2.png'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-container {
+  position: absolute;
+  background-color: white;
+  color: #2E5077;
+  width: 300px; /* Adjust size */
+  height: 300px; /* Adjust size */
+  border-radius: 50%; /* Makes it a circle */
+  display: flex center;
+  align-items: flex center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  opacity: 0.85;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+}
+
+.circle-container h1 {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: Helvetica; /* Choose a modern font */
+  font-size: 40px;
+  font-style: oblique;
+  font-weight: 900;
+  /*color: #2E5077;*/
+  color: #2E5077;
+}
+
+
 /* Footer */
 footer {
-  background-color: #2E5077;
+  background-color: #2aa3da;
   color: #F6F4F0;
   text-align: center;
   padding: 1rem 0;

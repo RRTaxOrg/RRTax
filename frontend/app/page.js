@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -20,7 +21,7 @@ export default function Home() {
       <div>
           <header>
               <nav>
-                  <Image src="/RRTax_logo.jpg" alt="Logo" width={200} height={200} />
+                  <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={200} height={200} />
                   <ul>
                       
                       <li><a href="#home" onClick={() => { setActiveTab('home'); setShowLogin(false); }}>Home</a></li>
@@ -65,39 +66,80 @@ export default function Home() {
                       <div className="body">
                         
                         <br></br>
-                        <h1><strong>Our Mission</strong></h1>
+                        <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className="text-3xl font-bold">Our Mission</motion.h1>
                         <br></br>
-                        <p>At RR TAX ACCOUNTING AND FINANCIAL SERVICES , our mission is to empower individuals and 
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.9 }}
+                        className="text-lg">At RR TAX ACCOUNTING AND FINANCIAL SERVICES , our mission is to empower individuals and 
                           businesses across Canada to achieve financial success through reliable, accurate, and 
                           personalized accounting services.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <p>We are committed to simplifying complex financial processes, ensuring compliance, and 
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2 }}
+                        className="text-lg">We are committed to simplifying complex financial processes, ensuring compliance, and 
                           providing expert advice that fosters growth and stability.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <p>By building strong relationships with our clients and prioritizing their unique needs, 
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.4 }}
+                        className="text-lg">By building strong relationships with our clients and prioritizing their unique needs, 
                           we strive to be a trusted partner in their journey toward long-term prosperity.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <h1><strong>What we do</strong></h1>
+                      </div>
+                      <div className="prose">
                         <br></br>
-                        <p>At RR TAX ACCOUNTING AND FINANCIAL SERVICES, we specialize in managing your financial 
+                        <br></br>
+                        <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className="text-3xl font-bold"
+                        >What we do</motion.h1>
+                        <br></br>
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-lg">At RR TAX ACCOUNTING AND FINANCIAL SERVICES, we specialize in managing your financial 
                           records, ensuring compliance with tax regulations, and providing expert advice to help 
                           you make informed financial decisions.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <p>From bookkeeping and preparing financial statements to tax planning and filing, we 
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2 }}
+                        className="text-lg">From bookkeeping and preparing financial statements to tax planning and filing, we 
                           handle the numbers so you can focus on growing your business.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <p>We also assist with budgeting, cash flow management, and strategic planning to 
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.4 }}
+                        className="text-lg">We also assist with budgeting, cash flow management, and strategic planning to 
                           ensure your financial health stays on track.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <p>Whether you're an individual, a small business owner, or an entrepreneur, we're here 
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.6 }}
+                        className="text-lg">Whether you're an individual, a small business owner, or an entrepreneur, we're here 
                           to simplify your finances and help you achieve your goals.
-                        </p>
+                        </motion.p>
                         <br></br>
                         <br></br>
                       </div>
@@ -108,9 +150,17 @@ export default function Home() {
                       </section>
 
                       <section id="about" className={`tab-content ${activeTab === 'about' ? 'active' : 'hidden'}`}>
-                      <div className="body">
-                        <br></br>
-                        <br></br>
+                      <div className="bodyalt">
+                        
+                        <div className="background-section">
+                          <div className="circle-container">
+                            <br></br>
+                            <br></br>
+                            <h1>About Us</h1>
+                            <br></br>
+                            <p>RR Tax Accounting and Financial Services Corporation</p>
+                          </div>
+                        </div>
                         <h1><strong>About Us</strong></h1>
                         <br></br>
                         <p>At RR TAX ACCOUNTING AND FINANCIAL SERVICES, we are dedicated to providing personalized
@@ -125,7 +175,7 @@ export default function Home() {
                             your specific needs.
                         </p>
                         <br></br>
-                        <p>Whether you’re navigating the complexities of tax compliance, seeking advice to 
+                        <p>Whether you're navigating the complexities of tax compliance, seeking advice to 
                           grow your business, or simply need help managing your finances, we’re here to guide
                            you every step of the way. Our approachable and knowledgeable team prides itself 
                            on building long-term relationships and delivering results that matter.
@@ -133,7 +183,7 @@ export default function Home() {
                         <br></br>
                         <p><legend>Let us handle the numbers, so you can focus on what you do best.</legend></p>
                         <br></br>
-                        <h2>Contact us today to see how we can help you achieve your financial goals!</h2>
+                        <p>Contact us today to see how we can help you achieve your financial goals!</p>
                         <br></br>
                         <br></br>
                       </div>
