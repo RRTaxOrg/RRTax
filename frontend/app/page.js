@@ -17,6 +17,16 @@ export default function Home() {
       return () => clearInterval(interval);
   }, []);
 
+  // Function to go to the next image
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 3);
+  };
+
+  // Function to go to the previous image
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + 3) % 3);
+  };
+
   return (
       <div>
           <header>
@@ -24,14 +34,14 @@ export default function Home() {
                   <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={200} height={200} />
                   <ul>
                       
-                      <li><a href="#home" onClick={() => { setActiveTab('home'); setShowLogin(false); }}>Home</a></li>
-                      <li><a href="#about" onClick={() => { setActiveTab('about'); setShowLogin(false); }}>About Us</a></li>
-                      <li><a href="#services" onClick={() => { setActiveTab('services'); setShowLogin(false); }}>Services</a></li>
-                      <li><a href="#resources" onClick={() => { setActiveTab('resources'); setShowLogin(false); }}>Resources</a></li>
-                      <li><a href="#contactus" onClick={() => { setActiveTab('contactus'); setShowLogin(false); }}>Contact Us</a></li>
+                      <li><a href="#home" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/ setActiveTab('home'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>Home</a></li>
+                      <li><a href="#about" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/ setActiveTab('about'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>About Us</a></li>
+                      <li><a href="#services" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/ setActiveTab('services'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>Services</a></li>
+                      <li><a href="#resources" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/setActiveTab('resources'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>Resources</a></li>
+                      <li><a href="#contactus" onClick={(e) => {e.preventDefault(); /* Prevent default anchor behavior*/ setActiveTab('contactus'); setShowLogin(false); window.scrollTo(0, 0);  /* Scroll to top on click*/}}>Contact Us</a></li>
                       
                   </ul>
-                  <button className="login-btn" onClick={() => setShowLogin(true)}>Login</button>
+                  <button className="login-btn" onClick={() => {setShowLogin(true); window.scrollTo(0, 0);  /* Scroll to top on click*/ }}>Login</button>
               </nav>
           </header>
 
@@ -40,28 +50,35 @@ export default function Home() {
                   <>
                       <section id="home" className={`tab-content ${activeTab === 'home' ? 'active' : 'hidden'}`}>
                       <div className="carousel-container">
-                          
-                          <Image 
-                            src="/Building1.jpg" 
-                            alt="Image 1" 
-                            width={1548} 
-                            height={865} 
-                            style={{ display: currentImageIndex === 0 ? 'block' : 'none' }} 
-                          />
-                          <Image 
-                            src="/Building2.jpg" 
-                            alt="Image 2" 
-                            width={1548} 
-                            height={865} 
-                            style={{ display: currentImageIndex === 1 ? 'block' : 'none' }} 
-                          />
-                          <Image 
-                            src="/Building3.jpg" 
-                            alt="Image 3" 
-                            width={1548} 
-                            height={865}  
-                            style={{ display: currentImageIndex === 2 ? 'block' : 'none' }} 
-                          />
+                            {/* Left Button */}
+                            <button className="carousel-button left" onClick={prevImage}>
+                              &#10094; {/* Left Arrow Symbol (‹) */}
+                            </button>
+                            <Image 
+                              src="/Building1.jpg" 
+                              alt="Image 1" 
+                              width={1548} 
+                              height={865} 
+                              style={{ display: currentImageIndex === 0 ? 'block' : 'none' }} 
+                            />
+                            <Image 
+                              src="/Building2.jpg" 
+                              alt="Image 2" 
+                              width={1548} 
+                              height={865} 
+                              style={{ display: currentImageIndex === 1 ? 'block' : 'none' }} 
+                            />
+                            <Image 
+                              src="/Building3.jpg" 
+                              alt="Image 3" 
+                              width={1548} 
+                              height={865}  
+                              style={{ display: currentImageIndex === 2 ? 'block' : 'none' }} 
+                            />
+                            {/* Right Button */}
+                            <button className="carousel-button right" onClick={nextImage}>
+                              &#10095; {/* Right Arrow Symbol (›) */}
+                            </button>        
                       </div>
                       <div className="body">
                         
@@ -161,29 +178,177 @@ export default function Home() {
                             <p>RR Tax Accounting and Financial Services Corporation</p>
                           </div>
                         </div>
-                        <h1><strong>About Us</strong></h1>
+                        <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className="text-3xl font-bold">About Us</motion.h1>
                         <br></br>
-                        <p>At RR TAX ACCOUNTING AND FINANCIAL SERVICES, we are dedicated to providing personalized
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-lg">At RR TAX ACCOUNTING AND FINANCIAL SERVICES, we are dedicated to providing personalized
                            and professional accounting services to individuals, small businesses, and entrepreneurs
                             across Canada. With a commitment to accuracy, integrity, and exceptional client service,
                              we aim to be your trusted financial partner.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <p>Founded with a passion for helping businesses thrive, our team brings years of experience
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.9 }}
+                        className="text-lg">Founded with a passion for helping businesses thrive, our team brings years of experience
                            in accounting, tax planning, and financial advisory services. We understand the unique 
                            challenges faced by Canadian businesses and individuals, and we tailor our solutions to meet
                             your specific needs.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <p>Whether you're navigating the complexities of tax compliance, seeking advice to 
-                          grow your business, or simply need help managing your finances, we’re here to guide
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.0 }}
+                        className="text-lg">Whether you're navigating the complexities of tax compliance, seeking advice to 
+                          grow your business, or simply need help managing your finances, we're here to guide
                            you every step of the way. Our approachable and knowledgeable team prides itself 
                            on building long-term relationships and delivering results that matter.
-                        </p>
+                        </motion.p>
                         <br></br>
-                        <p><legend>Let us handle the numbers, so you can focus on what you do best.</legend></p>
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.1 }}
+                        className="text-lg">Let us handle the numbers, so you can focus on what you do best.</motion.p>
                         <br></br>
-                        <p>Contact us today to see how we can help you achieve your financial goals!</p>
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2 }}
+                        className="text-lg">Contact us today to see how we can help you achieve your financial goals!</motion.p>
+                        <br></br>
+                        <br></br>
+                      </div>
+                      <footer>
+                        <p>© 2025 RRTax Incorporated</p>
+                      </footer>
+                      </section>
+
+                      <section id="services" className={`tab-content ${activeTab === 'services' ? 'active' : 'hidden'}`}>
+                      <div className="bodyalt">
+                        
+                        <div className="background-section-services">
+                          <div className="circle-container-services">
+                            
+                            <h1>Services</h1>
+                            
+                            <p>RR Tax Accounting and Financial Services Corporation</p>
+                          </div>
+                        </div>
+                        <br></br>
+                        <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className="text-3xl font-bold">Services</motion.h1>
+                        <br></br>
+                        <ul>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● CORPORATE AND BUSINESS TAX</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● CORPORATE TAX RETURN</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● INCORPORATION</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● TAX AUDITS / APPEAL</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● SELF- EMPLOYED</motion.li>
+                        </ul>
+                        <br></br>
+                        <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className="text-3xl font-bold">Accounting</motion.h1>
+                        <br></br>
+                        <ul>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● Financial Statements</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● Bookkeeping</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● Payroll Services</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● Financial Forecasts</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● HST filing</motion.li>
+                          <motion.li
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.8 }}
+                          className="text-lg">  ● Accounting software set up (Quickbooks)</motion.li>
+                          </ul>
+                        <br></br>
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.9 }}
+                        className="text-lg">Founded with a passion for helping businesses thrive, our team brings years of experience
+                           in accounting, tax planning, and financial advisory services. We understand the unique 
+                           challenges faced by Canadian businesses and individuals, and we tailor our solutions to meet
+                            your specific needs.
+                        </motion.p>
+                        <br></br>
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.0 }}
+                        className="text-lg">Whether you're navigating the complexities of tax compliance, seeking advice to 
+                          grow your business, or simply need help managing your finances, we're here to guide
+                           you every step of the way. Our approachable and knowledgeable team prides itself 
+                           on building long-term relationships and delivering results that matter.
+                        </motion.p>
+                        <br></br>
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.1 }}
+                        className="text-lg">Let us handle the numbers, so you can focus on what you do best.</motion.p>
+                        <br></br>
+                        <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2 }}
+                        className="text-lg">Contact us today to see how we can help you achieve your financial goals!</motion.p>
                         <br></br>
                         <br></br>
                       </div>
@@ -204,7 +369,7 @@ export default function Home() {
 
 function Login() {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-customWhite">
+      <div className="flex items-center justify-center min-h-screen bg-customWhite mt-20">
         <div className="flex flex-col items-center w-full max-w-md space-y-8">
           <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={500} height={500} />
           <div className="w-full p-8 space-y-8 bg-white rounded-lg shadow-md">
@@ -217,5 +382,6 @@ function Login() {
           </div>
         </div>
       </div>
+      
     );
 }
