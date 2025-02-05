@@ -2,6 +2,7 @@ This is the RRtax Website Project for EECS2311Z
 
 **ITR0**
 Link to Youtube video of exploratory meeting with the client: https://youtu.be/inh3fe45IU8
+Link to Google Docs document for Iteration 0: https://docs.google.com/document/d/14BtTduTpBqOeJh-ErC-dOKVAOxjb6ydDlebsMnDQPdk/edit?usp=sharing
 
 **Tech Stack**
 - Next.js - Frontend
