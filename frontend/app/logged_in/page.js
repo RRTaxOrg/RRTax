@@ -32,7 +32,7 @@ export default function LoggedInPage() {
 
       if (logoutData.code === "0") {
         console.log("User logged out successfully");
-        router.push('/');
+        router.push('/'); // chanhge to login after fixing header issue
       } else if (logoutData.code === "3") {
         console.error("Info missing");
       }
