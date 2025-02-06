@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
+import LoginPage from "./log_in/page";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -358,7 +359,7 @@ export default function Home() {
                       </section>
                   </>
               ) : (
-                  <Login />
+                  <LoginPage />
               )}
           </main>
 
@@ -367,21 +368,4 @@ export default function Home() {
   );
 }
 
-function Login() {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-customWhite mt-20">
-        <div className="flex flex-col items-center w-full max-w-md space-y-8">
-          <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={500} height={500} />
-          <div className="w-full p-8 space-y-8 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold text-center text-customBlue">Login</h2>
-            <form className="mt-8 space-y-6">
-              <input id="email-address" type="email" required placeholder="Email address" className="w-full px-3 py-2 border rounded-t-md" />
-              <input id="password" type="password" required placeholder="Password" className="w-full px-3 py-2 border rounded-b-md" />
-              <button type="submit" className="w-full px-4 py-2 text-white bg-customBlue rounded-md">Sign in</button>
-            </form>
-          </div>
-        </div>
-      </div>
-      
-    );
-}
+
