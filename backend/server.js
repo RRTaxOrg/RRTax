@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require("cors")
-const port = 3000
+const port = 3001
 
 const app = express()
 app.use(cors())
@@ -92,11 +92,12 @@ app.get("/signup/", async function(req, res){
 // Log user out based off of token field
 // Return codes: 0 success, 3 - Info missing
 app.get("/logout/", async function(req, res){
+    var payload = req.query;
+    
     if (!payload.token) {
         res.send(JSON.stringify({code: "3"}))
     }
 
-    var payload = req.query;
     console.log(payload.token);
     await removeSession(payload.token);
     res.send(JSON.stringify({code: "0"}));
