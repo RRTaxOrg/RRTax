@@ -7,6 +7,7 @@ import LoginPage from "./log_in/page";
 import HomeTab from "./tabs/HomeTab";
 import AboutUsTab from "./tabs/AboutUsTab";
 import ServicesTab from "./tabs/ServicesTab";
+import ResourcesTab from "./tabs/ResourcesTab";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -53,13 +54,18 @@ export default function Home() {
                       {activeTab === 'home' && <HomeTab currentImageIndex={currentImageIndex} nextImage={nextImage} prevImage={prevImage} />}
                       {activeTab === 'about' && <AboutUsTab />}
                       {activeTab === 'services' && <ServicesTab />}
+                      {activeTab === 'resources' && <ResourcesTab />}
                       {/* Add other tabs here */}
                   </>
               ) : (
                   <LoginPage />
               )}
           </main>
+          <footer>
+            <p>© 2025 RRTax Incorporated</p>
+          </footer>
       </div>
+      
   );
 }
 

@@ -68,10 +68,44 @@ export default function HomeTab({ currentImageIndex, nextImage, prevImage }) {
           we strive to be a trusted partner in their journey toward long-term prosperity.
         </motion.p>
         <br></br>
+        
+        <div className="prose">
+            <br></br>
+            <motion.h1
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="text-3xl font-bold">What we do</motion.h1>
+            <br></br>
+            <motion.p
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9 }}
+            className="text-lg">At RR TAX ACCOUNTING AND FINANCIAL SERVICES, we specialize in managing your 
+            financial records, ensuring compliance with tax regulations, and providing expert advice to help
+            you make informed financial decisions.
+            </motion.p>
+            <br></br>
+            <motion.p
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2 }}
+            className="text-lg">From bookkeeping and preparing financial statements to tax planning and 
+            filing, we handle the numbers so you can focus on growing your business.
+            </motion.p>
+            <br></br>
+            <motion.p
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.4 }}
+            className="text-lg">We also assist with budgeting, cash flow management, and strategic 
+            planning to ensure your financial health stays on track. Whether you're an individual,
+            a small business owner, or an entrepreneur, we're here to simplify your finances and
+                help you achieve your goals.
+            </motion.p>
+            <br></br>
+        </div>
       </div>
-      <footer>
-        <p>© 2025 RRTax Incorporated</p>
-      </footer>
     </section>
   );
 }

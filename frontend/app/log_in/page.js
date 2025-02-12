@@ -92,7 +92,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-customWhite">
+    <div className="flex items-center justify-center min-h-screen bg-customWhite mt-20">
       <div className="flex flex-col items-center w-full max-w-md space-y-8">
         <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={500} height={500} />
         <div className="w-full p-8 space-y-8 bg-white rounded-lg shadow-md">

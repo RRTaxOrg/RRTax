@@ -9,10 +9,10 @@ export default function AboutUsTab() {
             <br></br>
             <br></br>
             <h1>About Us</h1>
-            <br></br>
             <p>RR Tax Accounting and Financial Services Corporation</p>
           </div>
         </div>
+        <br></br>
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,9 +63,6 @@ export default function AboutUsTab() {
         <br></br>
         <br></br>
       </div>
-      <footer>
-        <p>© 2025 RRTax Incorporated</p>
-      </footer>
     </section>
   );
 }
