@@ -8,6 +8,7 @@ import HomeTab from "./tabs/HomeTab";
 import AboutUsTab from "./tabs/AboutUsTab";
 import ServicesTab from "./tabs/ServicesTab";
 import ResourcesTab from "./tabs/ResourcesTab";
+import ContactUs from "./tabs/ContactUs";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
@@ -55,6 +56,7 @@ export default function Home() {
                       {activeTab === 'about' && <AboutUsTab />}
                       {activeTab === 'services' && <ServicesTab />}
                       {activeTab === 'resources' && <ResourcesTab />}
+                      {activeTab === 'contactus' && <ContactUs />} {/* Contact Us Tab */}
                       {/* Add other tabs here */}
                   </>
               ) : (
