@@ -46,7 +46,7 @@ export default function ContactUs() {
   };
 
   return ( 
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50 mt-20">
       <div className="isolate px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <div className="mb-12">

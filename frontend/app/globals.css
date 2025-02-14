@@ -313,6 +313,21 @@ main {
   color: #2E5077;
 }
 
+.services-lists-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.services-list {
+  flex: 1;
+  margin-right: 20px; /* Adjust the margin as needed */
+  margin-left: 20px;
+}
+
+.services-list:last-child {
+  margin-right: 0;
+}
+
 .resources-lists-container {
   display: flex;
   justify-content: space-between;
@@ -365,21 +380,6 @@ main {
   font-weight: 900;
   /*color: #2E5077;*/
   color: #2E5077;
-}
-
-.resources-lists-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.resources-list {
-  flex: 1;
-  margin-right: 20px; /* Adjust the margin as needed */
-  margin-left: 20px;
-}
-
-.resources-list:last-child {
-  margin-right: 0;
 }
 
 
