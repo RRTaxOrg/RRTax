@@ -266,8 +266,8 @@ main {
 .circle-container h1 {
   margin-left: 10px;
   margin-right: 10px;
-  font-family: Helvetica; /* Choose a modern font */
-  font-size: 40px;
+  font-family: 'Times New Roman', Times, serif; /* Choose a modern font */
+  font-size: 50px;
   font-style: oblique;
   font-weight: 900;
   /*color: #2E5077;*/
@@ -312,6 +312,76 @@ main {
   /*color: #2E5077;*/
   color: #2E5077;
 }
+
+.services-lists-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.services-list {
+  flex: 1;
+  margin-right: 20px; /* Adjust the margin as needed */
+  margin-left: 20px;
+}
+
+.services-list:last-child {
+  margin-right: 0;
+}
+
+.resources-lists-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.resources-list {
+  flex: 1;
+  margin-right: 20px; /* Adjust the margin as needed */
+  margin-left: 20px;
+}
+
+.resources-list:last-child {
+  margin-right: 0;
+}
+
+.background-section-resources {
+  position: relative; /* Needed for absolute positioning of the circle */
+  background-image: url('/Background1.jpg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-container-resources {
+  position: absolute;
+  background-color: #F6F4F0;
+  color: #2E5077;
+  width: 250px; /* Adjust size */
+  height: 250px; /* Adjust size */
+  border-radius: 5%; /* Makes it a circle */
+  display: flex center;
+  align-items: flex center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  opacity: 0.85;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+}
+
+.circle-container-resources h1 {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family:'Times New Roman', Times, serif; /* Choose a modern font */
+  font-size: 50px;
+  font-style: oblique;
+  font-weight: 900;
+  /*color: #2E5077;*/
+  color: #2E5077;
+}
+
 
 /* Footer */
 footer {

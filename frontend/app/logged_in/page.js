@@ -32,7 +32,7 @@ export default function LoggedInPage() {
 
       if (logoutData.code === "0") {
         console.log("User logged out successfully");
-        router.push('/'); // chanhge to login after fixing header issue
+        router.push('/'); // change to login after fixing header issue
       } else if (logoutData.code === "3") {
         console.error("Info missing");
       }
@@ -42,7 +42,7 @@ export default function LoggedInPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-customWhite">
+    <div className="flex items-center justify-center min-h-screen bg-customWhite mt-20">
       <div>
         <h1 className="text-2xl font-bold text-center text-customBlue">You are logged in</h1>
         <button onClick={handleLogout} className="w-full px-4 py-2 text-white bg-red-500 rounded-md">Log out</button>
