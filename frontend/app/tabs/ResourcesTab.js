@@ -71,6 +71,59 @@ export default function ResourcesTab() {
                             <br></br>
                         </ul>
                     </div>
+                    <div className="resources-list">
+                    <br></br>
+                    <motion.p
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9 }}
+                    className="text-2xl font-bold">Tax Tools and Calculators</motion.p>
+                        <ul>
+                            <motion.li
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="text-lg">  ● <a href="https://www.canada.ca/en/revenue-agency.html">
+                                    Payroll Deductions Online Calculator: Calculate payroll deductions, including CPP, EI, and income tax.</a></motion.li>
+                            <motion.li
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="text-lg">  ● <a href="https://www.canada.ca/en/employment-social-development.html">
+                                    Child and Family Benefits Calculator: Estimate your eligibility for benefits like the Canada Child Benefit.</a></motion.li>
+                            <br></br>
+                        </ul>
+                    </div>
+                    <div className="resources-list">
+                    <br></br>
+                    <motion.p
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9 }}
+                    className="text-2xl font-bold">Small Business Resources</motion.p>
+                        <ul>
+                            <motion.li
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="text-lg">  ● <a href="https://www.canada.ca/en/revenue-agency.html">
+                                    Starting a Business Guide (CRA): A guide to understanding tax obligations for new businesses.
+                                    </a></motion.li>
+                            <motion.li
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="text-lg">  ● <a href="https://www.canada.ca/en/employment-social-development.html">
+                                    Incorporation in Canada: Steps to incorporate your business and stay compliant.</a></motion.li>
+                            <motion.li
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                                className="text-lg">  ● <a href="https://www.canada.ca/en/employment-social-development.html">
+                                    Employer’s Guide: Key responsibilities and tax requirements for employers.</a></motion.li>
+                            <br></br>
+                        </ul>
+                    </div>
                 </div>
             </div>        
         </section>
