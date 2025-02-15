@@ -117,6 +117,7 @@ function updateRow(DBPath, table, selectData, updateData) {
     // Generate full SQL query and run it on the database
     var sql = `UPDATE ${table} SET ${updateInfo} WHERE ${selectInfo}`;
     try {
+        console.log(sql);
         var db = new database(DBPath);
         db.prepare(sql).run();
         db.close();

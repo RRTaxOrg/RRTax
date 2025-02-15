@@ -103,6 +103,24 @@ app.get("/logout/", async function(req, res){
     res.send(JSON.stringify({code: "0"}));
 })
 
+
+/*app.get("/user/getdata/", async function(req, res){
+    var payload = req.query;
+    
+    if (!(payload.token && )) {
+        res.send(JSON.stringify({code: "3"}))
+    }
+});
+
+
+app.get("/user/setdata/", async function(req, res){
+    var payload = req.query;
+    
+    if (!(payload.token && )) {
+        res.send(JSON.stringify({code: "3"}))
+    }
+});*/
+
 app.listen(port, function(){
     console.log("Listening to port " + port + "!");
 })
