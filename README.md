@@ -1,44 +1,61 @@
-This is the RRtax Website Project for EECS2311Z
+# RRTax
 
-**ITR0**
-Link to Youtube video of exploratory meeting with the client: https://youtu.be/inh3fe45IU8
-Link to Google Docs document for Iteration 0: https://docs.google.com/document/d/14BtTduTpBqOeJh-ErC-dOKVAOxjb6ydDlebsMnDQPdk/edit?usp=sharing
+## How to Run the Project
 
-**Tech Stack**
-- Next.js - Frontend
-- Node.js - Backend
-- SQLite - Database
+- In the root directory do ./start_script.sh to run then the website should open on
+- http://localhost:3000 if it doent click on this
 
-## Getting Started With The Project
-## Go and install Node.js from the internet
+### Prerequisites
 
-## 1> First make you own copy of the project by making a fork which is like making a copy of the project on github. it can be done from the github repo
-- Fork the repo then open it in your IDE VS code is recommended
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
-## 2> Then open the project in your IDE open the terminal and to run the project do the following
-- First, Install all the dependencies you need for the project, this makes sure your packages are upto date ONLY DO THIS ONCE PER FORK:
-- first go into your project folder in the terminal then use this to install
-```bash
-npm install
-```
 
-## 3> Next to run the project meaning to host the current website on your local machine do the following
-- after this the website will run on localhost at port 3000 'https://localhost:3000'
-- NOTE THIS IS JUST A DEVELOPMENT VERSION
-```bash
-npm run dev
-```
+RRTax is a web application designed to provide tax accounting and financial services. The application allows users to sign up, log in, and access various services related to tax and accounting. The backend is built with Node.js and Express, while the frontend is built with Next.js and React.
 
-## 4> To build the project for production use the following command
-- this will make the website ready for deployment and the whole website will be compressed into the .next folder
-```bash
-npm run build
-```
+## File Overview 
+Backend:
+backend/
+├── authentication/
+│   ├── auth.js
+├── databases/
+│   ├── main.db
+├── sql.js
+├── server.js
+├── package.json
+└── package-lock.json
 
-## 5> To Run THis Production Version of the website use the following command
-- this will make the website run on localhost at port 3000 'https://localhost:300 but this will run the final production version
-```bash
-npm start
-```
+authentication/: Contains authentication-related logic.
+databases/: Contains the database files.
+sql.js: Contains SQL-related functions.
+server.js: The main server file.
+package.json: Contains the backend dependencies and scripts.
+package-lock.json: Contains the exact versions of installed dependencies.
 
-**You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.**
+Frontend:
+frontend/
+├── app/
+│   ├── log_in/
+│   │   ├── page.js
+│   ├── logged_in/
+│   │   ├── page.js
+│   ├── page.js
+│   ├── layout.js
+│   ├── globals.css
+├── public/
+│   ├── Logo_Improved_bg_removed.png
+│   ├── Building1.jpg
+│   ├── Building2.jpg
+│   ├── Building3.jpg
+├── package.json
+└── package-lock.json
+
+app/: Contains the main application files.
+log_in/: Contains the login page.
+logged_in/: Contains the logged-in page.
+page.js: The main page file.
+layout.js: The layout file.
+globals.css: Global CSS styles.
+public/: Contains public assets like images.
+package.json: Contains the frontend dependencies and scripts.
+package-lock.json: Contains the exact versions of installed dependencies.
