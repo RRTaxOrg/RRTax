@@ -64,7 +64,7 @@ export default function ContactUs() {
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div className="relative">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                <UserCircleIcon className="h-5 w-5 inline-block mr-1 text-indigo-600" />
+                <UserCircleIcon className="h-5 w-5 inline-block mr-1 text-customBlue" />
                 Name
               </label>
               <input
@@ -81,7 +81,7 @@ export default function ContactUs() {
 
             <div className="sm:col-span-2">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                <EnvelopeIcon className="h-5 w-5 inline-block mr-1 text-indigo-600" />
+                <EnvelopeIcon className="h-5 w-5 inline-block mr-1 text-customBlue" />
                 Email
               </label>
               <input
@@ -98,7 +98,7 @@ export default function ContactUs() {
 
             <div className="sm:col-span-2">
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                <PhoneIcon className="h-5 w-5 inline-block mr-1 text-indigo-600" />
+                <PhoneIcon className="h-5 w-5 inline-block mr-1 text-customBlue" />
                 Phone Number
               </label>
               <input
@@ -115,7 +115,7 @@ export default function ContactUs() {
 
             <div className="sm:col-span-2">
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                <ChatBubbleLeftIcon className="h-5 w-5 inline-block mr-1 text-indigo-600" />
+                <ChatBubbleLeftIcon className="h-5 w-5 inline-block mr-1 text-customBlue" />
                 Message
               </label>
               <textarea
@@ -132,7 +132,7 @@ export default function ContactUs() {
             <div className="sm:col-span-2">
               <button
                 type="submit"
-                className="mt-6 w-full rounded-lg bg-gradient-to-r from-indigo-600 to-blue-500 px-6 py-4 text-lg font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-blue-600 transition-all duration-300 transform hover:scale-[1.02]"
+                className="mt-6 w-full rounded-lg bg-customBlue px-6 py-4 text-lg font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-blue-600 transition-all duration-300 transform hover:scale-[1.02]"
               >
                 Send Message
               </button>
@@ -147,9 +147,6 @@ export default function ContactUs() {
           </div>
         </form>
       </div>
-      <footer>
-        <p>© 2025 RRTax Incorporated</p>
-     </footer>
       
     </div>
   );
