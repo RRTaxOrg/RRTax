@@ -36,7 +36,8 @@ export default function LoginPage() {
 
       if (signupData.code === "0") {
         console.log("User created successfully", signupData.token);
-        router.push(`/logged_in?token=${signupData.token}`);
+        // Pass email to the logged_in page
+        router.push(`/logged_in?token=${signupData.token}&email=${encodeURIComponent(email)}`);
       } else if (signupData.code === "1") {
         setErrorMessage("Email already in use.");
       } else if (signupData.code === "2") {
@@ -79,7 +80,8 @@ export default function LoginPage() {
 
       if (loginData.code === "0") {
         console.log("User logged in successfully", loginData.token);
-        router.push(`/logged_in?token=${loginData.token}`);
+        // Pass email to the logged_in page
+        router.push(`/logged_in?token=${loginData.token}&email=${encodeURIComponent(email)}`);
       } else if (loginData.code === "1") {
         setErrorMessage("Email not found.");
       } else if (loginData.code === "2") {
