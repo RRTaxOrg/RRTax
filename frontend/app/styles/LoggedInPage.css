@@ -1,0 +1,98 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #ddd;
+}
+
+.table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: #4CAF50;
+  color: white;
+  
+}
+
+.vertical-nav {
+  width: 300px;
+  height: 100vh; /* Ensure it spans the full height of the viewport */
+  background-color: #2E5077;
+  color: #F6F4F0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  align-items: center; /* Center the content horizontally */
+}
+
+.vertical-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Ensure the ul takes the full width */
+}
+
+.vertical-nav li {
+  margin: 0;
+}
+
+.vertical-nav a {
+  color: #F6F4F0;
+  text-decoration: none;
+  padding: 10px 20px; /* Add padding for better spacing */
+  display: block;
+  width: 100%; /* Ensure the link covers the full width */
+}
+
+.vertical-nav a:hover {
+  background-color: #1E3A5F;
+}
+
+/* Add this class for the main content */
+.main-content {
+    
+  /*margin-left: 200px; /* Adjust this value to match the width of the vertical nav */
+  /*padding: 20px; /* Optional: Add some padding for better spacing */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  border-color: #1E3A5F;
+  border-width: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  width: 480px;
+}
+
+.flex {
+    background-color: #f0f5f6;
+    color: #2E5077;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    
+}
+
+.logo-container {
+    background-color: #FFFFFF; /* White background for better visibility */
+    padding: 10px; /* Add some padding around the logo */
+    border-radius: 10px; /* Optional: Add border-radius for rounded corners */
+    margin-bottom: 20px; /* Add some space below the logo */
+}
