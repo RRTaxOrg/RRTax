@@ -31,7 +31,7 @@
 
 .vertical-nav {
   width: 300px;
-  height: 100vh; /* Ensure it spans the full height of the viewport */
+  height: 100%; /* Ensure it spans the full height of the viewport */
   background-color: #2E5077;
   color: #F6F4F0;
   position: fixed;
@@ -69,17 +69,42 @@
 /* Add this class for the main content */
 .main-content {
     
-  /*margin-left: 200px; /* Adjust this value to match the width of the vertical nav */
-  /*padding: 20px; /* Optional: Add some padding for better spacing */
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  border-color: #1E3A5F;
-  border-width: 5px;
-  border-radius: 5px;
-  border-style: solid;
-  width: 480px;
+    margin-left: 300px; /* Adjust this value to match the width of the vertical nav */
+    padding: 5px; /* Optional: Add some padding for better spacing */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-height: calc(100vh - 60px);
+    border-color: #1E3A5F;
+    border-width: 5px;
+    border-radius: 5px;
+    border-style: solid;
 }
+
+.background-dashboard {
+    position: relative; /* Needed for absolute positioning of the circle */
+    background-image: url('/Dashboard.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    width: 50vw;
+    height: 50vh; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .files {
+    position: relative; /* Needed for absolute positioning of the circle */
+    background-image: url('/files.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    width: 50vw;
+    height: 50vh; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 .flex {
     background-color: #f0f5f6;
@@ -96,3 +121,20 @@
     border-radius: 10px; /* Optional: Add border-radius for rounded corners */
     margin-bottom: 20px; /* Add some space below the logo */
 }
+
+.logout-btn {
+    background-color: #FF0000; /* Red background */
+    color: #FFFFFF; /* White text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: auto; /* Push the button to the bottom of the nav */
+    margin-bottom: 70px; /* Add some space at the bottom */
+    width: 80%; /* Make the button take up most of the width */
+  }
+  
+  .logout-btn:hover {
+    background-color: #CC0000; /* Darker red on hover */
+  }
