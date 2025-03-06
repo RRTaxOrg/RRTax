@@ -189,6 +189,51 @@ app.post("/appointment/create", async function(req, res){
     }
 });
 
+// Deletes an appointment by appointment_id and user_id
+// Return codes: 0 - appointment deleted successfully, 1 - appointment not found, 3 - Info missing
+app.delete("/appointment/delete", async function(req, res) {
+    var payload = req.body;
+    console.log("Received appointment deletion request:", payload);
+
+    if (!(payload.user_id && payload.appointment_id)) {
+        console.log("Missing user_id or appointment_id");
+        return res.status(400).send(JSON.stringify({code: "3", message: "Missing user_id or appointment_id"}));
+    }
+
+    try {
+        const db = new database("./databases/main.db");
+
+        // Convert user_id and appointment_id to INTEGER to avoid datatype mismatch
+        const userIdInt = parseInt(payload.user_id);
+        const appointmentIdInt = parseInt(payload.appointment_id);
+
+        if (isNaN(userIdInt) || isNaN(appointmentIdInt)) {
+            console.error("Invalid user_id or appointment_id format:", payload);
+            db.close();
+            return res.status(400).send(JSON.stringify({code: "3", message: "Invalid user_id or appointment_id format"}));
+        }
+
+        // Check if the appointment exists for the user
+        const appointment = db.prepare("SELECT * FROM appointments WHERE user_id = ? AND appointment_id = ?").get(userIdInt, appointmentIdInt);
+
+        if (!appointment) {
+            console.log("Appointment not found for user_id:", userIdInt, "appointment_id:", appointmentIdInt);
+            db.close();
+            return res.status(404).send(JSON.stringify({code: "1", message: "Appointment not found"}));
+        }
+
+        // Delete the appointment
+        db.prepare("DELETE FROM appointments WHERE user_id = ? AND appointment_id = ?").run(userIdInt, appointmentIdInt);
+
+        db.close();
+        console.log("Appointment deleted successfully for user_id:", userIdInt, "appointment_id:", appointmentIdInt);
+        res.send(JSON.stringify({code: "0", message: "Appointment deleted successfully"}));
+    } catch (error) {
+        console.error("Error deleting appointment:", error);
+        res.status(500).send(JSON.stringify({code: "1", error: error.message || "Unknown error"}));
+    }
+});
+
 // Gets all appointments for a user by user_id
 // Return codes: 0 - appointments retrieved successfully, 3 - Info missing
 app.get("/appointments/", async function(req, res){

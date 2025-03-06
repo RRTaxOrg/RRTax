@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import VerticalNavBar from '../components/VerticalNavBar';
 import LandingPage from './LandingPage';
 import AppointmentsPage from './AppointmentsPage';
-import FilesPage from './FilesPage'
+import FilesPage from './FilesPage';
 import '../styles/LoggedInPage.css';
 
 export default function LoggedInPage() {
@@ -15,6 +15,7 @@ export default function LoggedInPage() {
 
   const [user, setUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
+  const [bookedTimeSlots, setBookedTimeSlots] = useState([]);
   const [time, setTime] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -81,6 +82,7 @@ export default function LoggedInPage() {
       
       if (data.code === "0") {
         setAppointments(data.appointments || []);
+        setBookedTimeSlots(data.appointments.map(appointment => appointment.time));
       } else {
         console.error("Failed to fetch appointments:", data);
       }
@@ -145,6 +147,46 @@ export default function LoggedInPage() {
     }
   };
 
+  // Function to delete an appointment
+  const handleDeleteAppointment = async (appointmentId) => {
+    if (!user || !user.uid) {
+      setError("User data not available");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await fetch('http://localhost:3001/appointment/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: parseInt(user.uid), // Ensure it's an integer
+          appointment_id: appointmentId,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Appointment deletion response:", data);
+
+      if (data.code === "0") {
+        console.log("Appointment deleted successfully");
+        // Refresh appointments list
+        fetchAppointments(user.uid);
+        setError(''); // Clear any errors
+      } else {
+        setError(`Failed to delete appointment: ${data.message || "Unknown error"}`);
+      }
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+      setError("Error deleting appointment");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Function to handle user logout
   const handleLogout = async () => {
     if (!token) {
@@ -187,22 +229,24 @@ export default function LoggedInPage() {
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
         <VerticalNavBar setActiveTab={setActiveTab} handleLogout={handleLogout} />
-          {activeTab === 'dashboard' && <LandingPage />}
+                  {activeTab === 'dashboard' && <LandingPage />}
           {activeTab === 'appointments' && (
             <AppointmentsPage
               user={user}
               fetchAppointments={fetchAppointments}
               formatAppointmentTime={formatAppointmentTime}
               handleCreateAppointment={handleCreateAppointment}
+              handleDeleteAppointment={handleDeleteAppointment}
               loading={loading}
               error={error}
               appointments={appointments}
+              bookedTimeSlots={bookedTimeSlots}
               time={time}
               setTime={setTime}
             />
           )}
           {activeTab === 'files' && <FilesPage />}
-      </div>
+              </div>
       <footer>
         <p>© 2025 RRTax Incorporated</p>
       </footer>

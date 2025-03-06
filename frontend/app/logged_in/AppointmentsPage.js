@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 
-export default function AppointmentsPage({ user, fetchAppointments, formatAppointmentTime, handleCreateAppointment, loading, error, appointments, time, setTime }) {
+export default function AppointmentsPage({ user, fetchAppointments, formatAppointmentTime, handleCreateAppointment, handleDeleteAppointment, loading, error, appointments, bookedTimeSlots, time, setTime }) {
+  const isTimeSlotBooked = (timeSlot) => {
+    const unixTimeSlot = Math.floor(new Date(timeSlot).getTime() / 1000);
+    return bookedTimeSlots.includes(unixTimeSlot);
+  };
+
   return (
     <div className="main-content flex flex-col min-h-screen bg-gray-50 mt-20 mb-20">
-      <div className="w-full h-full flex-grow p-6 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center text-customBlue mb-4">Your Appointments</h1>
         
         {user ? (
@@ -25,11 +30,12 @@ export default function AppointmentsPage({ user, fetchAppointments, formatAppoin
               onChange={(e) => setTime(e.target.value)}
               className="w-full px-3 py-2 border rounded-md"
               disabled={loading || !user}
+              min={new Date().toISOString().slice(0, 16)} // Disable past dates
             />
             <button
               onClick={handleCreateAppointment}
               className="w-full px-4 py-2 text-white bg-customBlue rounded-md disabled:bg-gray-300"
-              disabled={loading || !user || !time}
+              disabled={loading || !user || !time || isTimeSlotBooked(time)}
             >
               {loading ? 'Processing...' : 'Create Appointment'}
             </button>
@@ -47,6 +53,7 @@ export default function AppointmentsPage({ user, fetchAppointments, formatAppoin
                   <tr>
                     <th>Time</th>
                     <th>Appointment ID</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -54,6 +61,15 @@ export default function AppointmentsPage({ user, fetchAppointments, formatAppoin
                     <tr key={appointment.appointment_id || index}>
                       <td>{formatAppointmentTime(appointment.time)}</td>
                       <td>{appointment.appointment_id}</td>
+                      <td>
+                        <button
+                          onClick={() => handleDeleteAppointment(appointment.appointment_id)}
+                          className="px-4 py-2 text-white bg-red-500 rounded-md"
+                          disabled={loading}
+                        >
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
