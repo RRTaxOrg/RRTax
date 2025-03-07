@@ -229,7 +229,7 @@ export default function LoggedInPage() {
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
         <VerticalNavBar setActiveTab={setActiveTab} handleLogout={handleLogout} />
-                  {activeTab === 'dashboard' && <LandingPage />}
+          {activeTab === 'dashboard' && <LandingPage user={user} email={email}/>}
           {activeTab === 'appointments' && (
             <AppointmentsPage
               user={user}

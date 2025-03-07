@@ -80,6 +80,7 @@
     border-width: 5px;
     border-radius: 5px;
     border-style: solid;
+    box-sizing: border-box; /* Ensure padding is evenly distributed as container inside resizes */
 }
 
 .background-dashboard {
@@ -94,6 +95,8 @@
     justify-content: center;
   }
 
+  
+
   .files {
     position: relative; /* Needed for absolute positioning of the circle */
     background-image: url('/files.jpg'); /* Replace with your image path */
@@ -104,6 +107,66 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .files-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .files-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .files-buttons button {
+    background-color: #2E5077; /* Button background color */
+    color: #FFFFFF; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0 10px; /* Add some space between the buttons */
+  }
+  
+  .files-buttons button:hover {
+    background-color: #1E3A5F; /* Darker background on hover */
+  }
+
+  .files-dropdown {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 200px;
+  }
+  
+  .files-dropdown.show {
+    display: flex; /* Show the dropdown when the class 'show' is added */
+  }
+  
+  .files-dropdown a {
+    color: #2E5077;
+    text-decoration: none;
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .files-dropdown a:hover {
+    background-color: #f0f0f0;
   }
 
 .flex {
@@ -138,3 +201,43 @@
   .logout-btn:hover {
     background-color: #CC0000; /* Darker red on hover */
   }
+
+.dashboard-container {
+  display: flex;
+  justify-content: space-around; /* Distribute space evenly between items */
+  align-items: center; /* Center items vertically */
+  width: 100%; /* Ensure the container takes the full width */
+  margin-top: 20px; /* Add some space above the container */
+}
+
+.dashboard-item {
+  display: flex;
+  flex-direction: column; /* Stack icon and caption vertically */
+  align-items: center; /* Center items horizontally */
+  text-align: center; /* Center text */
+}
+
+.settings-dashboard {
+    background-image: url('/Settings_Icon.png'); /* Replace with your image path */
+  }
+
+  .files-dashboard {
+    background-image: url('/FilesIcon.png'); /* Replace with your image path */
+  }
+
+  .appointments-dashboard {
+    background-image: url('/Appointments_Icon.png'); /* Replace with your image path */
+  }
+
+.settings-dashboard,
+.appointments-dashboard,
+.files-dashboard {
+  background-size: cover;
+  background-position: center;
+  width: 10vw;
+  height: 22vh; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px; /* Add some space between the icon and the caption */
+}
