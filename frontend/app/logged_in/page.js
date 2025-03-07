@@ -5,6 +5,7 @@ import VerticalNavBar from '../components/VerticalNavBar';
 import LandingPage from './LandingPage';
 import AppointmentsPage from './AppointmentsPage';
 import FilesPage from './FilesPage';
+import AccountSettingsPage from './AccountSettingsPage';
 import '../styles/LoggedInPage.css';
 
 export default function LoggedInPage() {
@@ -229,7 +230,8 @@ export default function LoggedInPage() {
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
         <VerticalNavBar setActiveTab={setActiveTab} handleLogout={handleLogout} />
-          {activeTab === 'dashboard' && <LandingPage user={user} email={email}/>}
+        
+          {activeTab === 'dashboard' && <LandingPage user={user} email={email} />}
           {activeTab === 'appointments' && (
             <AppointmentsPage
               user={user}
@@ -246,7 +248,9 @@ export default function LoggedInPage() {
             />
           )}
           {activeTab === 'files' && <FilesPage />}
-              </div>
+          {activeTab === 'account-settings' && <AccountSettingsPage user={user} />}
+        
+      </div>
       <footer>
         <p>© 2025 RRTax Incorporated</p>
       </footer>

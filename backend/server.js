@@ -301,6 +301,26 @@ app.get("/getUserByEmail", async function(req, res){
     }
 });
 
+app.post('/user/update', async (req, res) => {
+  const { user_id, ...userData } = req.body;
+
+  try {
+    const db = new database('./databases/main.db');
+
+    // Convert userData to JSON string
+    const userDataJson = JSON.stringify(userData);
+
+    // Update the user's data in the database
+    db.prepare('UPDATE users SET data = ? WHERE uid = ?').run(userDataJson, user_id);
+
+    db.close();
+    res.send(JSON.stringify({ code: '0', message: 'User data updated successfully' }));
+  } catch (error) {
+    console.error('Error updating user data:', error);
+    res.status(500).send(JSON.stringify({ code: '1', message: 'Error updating user data' }));
+  }
+});
+
 if (require.main === module) {
     app.listen(port, function(){
         console.log("Listening to port " + port + "!");
