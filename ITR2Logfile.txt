@@ -1,0 +1,101 @@
+ITR2 - Log FILE
+
+Meetings:
+
+February 24, 2025 - Initial Planning Meeting for ITR2
+
+Attendees: Full team
+
+Agenda:
+
+Discussed work distribution for Iteration 2
+
+Decided to work on the big story of the appointment system
+
+Work Distribution:
+
+Front-end: Deiago
+
+Back-end: Haider
+
+File system for document upload:
+
+Front end - Loveneek 
+
+Back end - Sebastian 
+
+Loveneek going to work on keeping the log of all the meetings for ITR2.
+
+Discussed estimated costs for implementation and testing.Used class time for discussions and planning.
+
+March 3, 2025 - Progress Review Meeting
+
+Reviewed progress made so far. By march 3 we had the login working but our appointnment still need to developed. 
+As our team still time to built the appointment system we mutually decided to focus only on Appointment system.
+
+Adjusted plan: Focused only on the appointment system for ITR2
+
+Further Decided that the file system feature will be implemented for the final submission for Delivery 1, not Iteration 2.
+
+Verified database integration and persistent storage implementation
+
+We Updated estimated costs for tasks accordingly.
+
+March 7 - Day of submission for ITR2
+
+Our team able to confirm the working of our appointment system which was our bigger story. 
+
+Followe by our user stories which were:
+Ability to see the earlier booked appointments.
+Ability to reschdule or cancel the appointment.
+Update the availability on the basis of earlier booked appointments.
+
+Task Breakdown for Iteration 2:
+
+Appointment System Development
+
+Front-end (Deiago)
+
+UI components for booking appointments
+
+Form validation
+
+Back-end (Haider)
+
+API endpoints for appointment management
+
+Database integration with PostgreSQL
+
+Testing
+
+Unit tests for business logic
+
+Integration tests for database interaction
+
+User Signup & Authentication
+
+User registration and login system
+
+Secure password storage and authentication.
+
+Documentation Updates
+
+Update GitHub Wiki with major changes
+
+UML class diagrams for design documentation
+
+Estimated vs Actual Cost Breakdown:
+
+Task                             Estimated Cost (Hours)  Actual Cost (Hours)
+
+Front-end development                   20                    22
+
+Back-end development                    30                    35
+
+Database implementation & integration   15                    18
+
+Testing (Unit & Integration)            10                    8
+
+User authentication system              10                    13
+
+Documentation updates                    2                    1.5
