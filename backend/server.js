@@ -12,10 +12,7 @@ const {
     getTable,
     getRow,
     updateRow,
-    deleteRow,
-    createAppointment,
-    getAppointments,
-    getUserByEmail,
+    deleteRow
 } = require("./sql.js");
 
 const {
@@ -110,7 +107,7 @@ app.get("/logout/", async function(req, res){
     res.send(JSON.stringify({code: "0"}));
 })
 
-// Creates a new appointment
+// Creates a new appointment using token, and time
 // Return codes: 0 - appointment created successfully, 3 - Info missing
 app.post("/appointment/create", async function(req, res){
     var payload = req.body;
@@ -121,9 +118,19 @@ app.post("/appointment/create", async function(req, res){
         return res.status(400).send(JSON.stringify({code: "3", message: "No payload received"}));
     }
 
-    if (!(payload.user_id && payload.time && payload.appId)) {
+    if (!(payload.user_id && payload.time && payload.token)) {
         console.log("Missing appointment data");
         return res.status(400).send(JSON.stringify({code: "3", message: "Missing required appointment data"}));
+    }
+
+
+    const userToken = payload.token;
+
+    var userId = authSession(userToken);
+
+    if (!userId) {
+        console.log("Invalid Session");
+        return res.status(400).send(JSON.stringify({code: "2", message: "Invalid session"}));
     }
 
     try {
@@ -140,7 +147,7 @@ app.post("/appointment/create", async function(req, res){
         });
         
         // Convert user_id to INTEGER type
-        const userId = parseInt(payload.user_id);
+        userId = parseInt(userId);
         
         if (isNaN(userId)) {
             console.error("Invalid user_id format:", payload.user_id);
@@ -189,7 +196,7 @@ app.post("/appointment/create", async function(req, res){
     }
 });
 
-// Deletes an appointment by appointment_id and user_id
+// Deletes an appointment by appointment_id and token
 // Return codes: 0 - appointment deleted successfully, 1 - appointment not found, 3 - Info missing
 app.delete("/appointment/delete", async function(req, res) {
     var payload = req.body;
@@ -235,16 +242,23 @@ app.delete("/appointment/delete", async function(req, res) {
 });
 
 // Gets all appointments for a user by user_id
-// Return codes: 0 - appointments retrieved successfully, 3 - Info missing
+// Return codes: 0 - appointments retrieved successfully, 2 - Invalid Session, 3 - Info missing
 app.get("/appointments/", async function(req, res){
     var payload = req.query;
-    const userId = payload.user_id || payload.uid;
+    const userToken = payload.token;
     
-    console.log("Fetching appointments for user ID:", userId);
+    console.log("Fetching appointments for user:", userToken);
+
+    if (!userToken) {
+        console.log("Missing token");
+        return res.status(400).send(JSON.stringify({code: "3", message: "Missing user token"}));
+    }
+
+    var userId = authSession(userToken);
 
     if (!userId) {
-        console.log("Missing user ID");
-        return res.status(400).send(JSON.stringify({code: "3", message: "Missing user ID"}));
+        console.log("Invalid Session");
+        return res.status(400).send(JSON.stringify({code: "2", message: "Invalid session"}));
     }
 
     try {

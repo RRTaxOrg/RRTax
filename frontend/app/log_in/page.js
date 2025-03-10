@@ -37,7 +37,10 @@ export default function LoginPage() {
       if (signupData.code === "0") {
         console.log("User created successfully", signupData.token);
         // Pass email to the logged_in page
-        router.push(`/logged_in?token=${signupData.token}&email=${encodeURIComponent(email)}`);
+        localStorage.setItem("userRRTAXToken", signupData.token);
+        //localStorage.getItem("userRRTAXToken");
+        //router.push(`/logged_in?token=${signupData.token}&email=${encodeURIComponent(email)}`);
+        router.push("/logged_in/");
       } else if (signupData.code === "1") {
         setErrorMessage("Email already in use.");
       } else if (signupData.code === "2") {

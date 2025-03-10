@@ -11,7 +11,7 @@ import '../styles/LoggedInPage.css';
 export default function LoggedInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const token = localStorage.getItem('userRRTAXToken');
   const email = searchParams.get('email');
 
   const [user, setUser] = useState(null);
