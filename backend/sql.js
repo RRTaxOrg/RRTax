@@ -5,10 +5,7 @@ module.exports = {
     getTable,
     getRow,
     updateRow,
-    deleteRow,
-    createAppointment,
-    getAppointments,
-    getUserByEmail,
+    deleteRow
 };
 
 // Gets specified table in DB

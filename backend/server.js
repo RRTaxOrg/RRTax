@@ -108,137 +108,81 @@ app.get("/logout/", async function(req, res){
 })
 
 // Creates a new appointment using token, and time
-// Return codes: 0 - appointment created successfully, 3 - Info missing
+// Return codes: 0 - appointment created successfully, 1 - error creating appointment, 2 - Invalid Session, 3 - Info missing, 4 - Invalid User ID Format
 app.post("/appointment/create", async function(req, res){
     var payload = req.body;
     console.log("Received appointment creation request:", payload);
-
-    if (!payload) {
-        console.log("Missing payload");
-        return res.status(400).send(JSON.stringify({code: "3", message: "No payload received"}));
-    }
 
     if (!(payload.user_id && payload.time && payload.token)) {
         console.log("Missing appointment data");
         return res.status(400).send(JSON.stringify({code: "3", message: "Missing required appointment data"}));
     }
 
-
-    const userToken = payload.token;
-
-    var userId = authSession(userToken);
+    var userId = authSession(payload.token);
 
     if (!userId) {
         console.log("Invalid Session");
         return res.status(400).send(JSON.stringify({code: "2", message: "Invalid session"}));
+    }       
+        
+    // Convert user_id to INTEGER type
+    userId = parseInt(userId);
+    
+    if (isNaN(userId)) {
+        console.error("Invalid user_id format:", payload.user_id);
+        return res.status(400).send(JSON.stringify({code: "4", message: "Invalid user ID format"}));
     }
+    
+    // Format time based on column type
+    let timeValue = payload.time;
 
-    try {
-        // Open database connection
-        const db = new database("./databases/main.db");
-        
-        // Check the existing columns in the appointments table
-        const columns = db.prepare("PRAGMA table_info(appointments)").all();
-        console.log("Existing columns:", columns.map(col => col.name));
-        
-        // Check the data types to ensure we're inserting the right types
-        columns.forEach(col => {
-            console.log(`Column ${col.name}: ${col.type}`);
-        });
-        
-        // Convert user_id to INTEGER type
-        userId = parseInt(userId);
-        
-        if (isNaN(userId)) {
-            console.error("Invalid user_id format:", payload.user_id);
-            db.close();
-            return res.status(400).send(JSON.stringify({code: "3", message: "Invalid user ID format"}));
-        }
-        
-        // Convert appointment_id to INTEGER if needed
-        let appointmentId = payload.appId;
-        if (columns.find(col => col.name === 'appointment_id')?.type === 'INTEGER') {
-            // If appointment_id is INTEGER type, try to parse it (or generate a numeric ID)
-            appointmentId = Date.now(); // Simple numeric ID based on timestamp
-        }
-        
-        // Format time based on column type
-        let timeValue = payload.time;
-        if (columns.find(col => col.name === 'time')?.type === 'TEXT') {
-            // If time column is TEXT, convert it to string
-            timeValue = String(payload.time);
-        }
-        
-        console.log("Prepared values:", {
-            appointment_id: appointmentId,
-            user_id: userId,
-            time: timeValue,
-            file_id: null
-        });
-        
-        // Construct the query based on the actual table structure
-        const stmt = db.prepare("INSERT INTO appointments (appointment_id, user_id, time, file_id) VALUES (?, ?, ?, ?)");
-        
-        // Execute the query with correct data types
-        stmt.run(
-            appointmentId, // appointment_id
-            userId,        // user_id
-            timeValue,     // time (as string if column is TEXT)
-            null           // file_id (null since we don't have it)
-        );
-        
-        db.close();
+    var result = insertInto("./databases/main.db", "appointments", {user_id: userId, time: timeValue});
+    if (result == 0) {
         console.log("Appointment created successfully");
         res.send(JSON.stringify({code: "0"}));
-    } catch (error) {
-        console.error("Error creating appointment:", error);
-        res.status(500).send(JSON.stringify({code: "1", error: error.message || "Unknown error"}));
+    }
+    else {
+        console.log(result);
+        res.send(JSON.stringify({code: "1", message: result}));
     }
 });
 
 // Deletes an appointment by appointment_id and token
-// Return codes: 0 - appointment deleted successfully, 1 - appointment not found, 3 - Info missing
+// Return codes: 0 - appointment deleted successfully, 1 - appointment not found, 2 - Invalid token, 3 - Info missing
 app.delete("/appointment/delete", async function(req, res) {
     var payload = req.body;
     console.log("Received appointment deletion request:", payload);
 
-    if (!(payload.user_id && payload.appointment_id)) {
-        console.log("Missing user_id or appointment_id");
-        return res.status(400).send(JSON.stringify({code: "3", message: "Missing user_id or appointment_id"}));
+    if (!(payload.token && payload.appointment_id)) {
+        console.log("Missing token or appointment_id");
+        return res.status(400).send(JSON.stringify({code: "3", message: "Missing token or appointment_id"}));
     }
 
-    try {
-        const db = new database("./databases/main.db");
+    // Convert user_id and appointment_id to INTEGER to avoid datatype mismatch
+    const userIdInt = authSession(payload.token);
+    const appointmentIdInt = parseInt(payload.appointment_id);
 
-        // Convert user_id and appointment_id to INTEGER to avoid datatype mismatch
-        const userIdInt = parseInt(payload.user_id);
-        const appointmentIdInt = parseInt(payload.appointment_id);
+    if (!userIdInt || !appointmentIdInt) {
+        console.log("Invalid token or appointment");
+        return res.status(400).send(JSON.stringify({code: "2", message: "Invalid token or appointment"}));
+    }
 
-        if (isNaN(userIdInt) || isNaN(appointmentIdInt)) {
-            console.error("Invalid user_id or appointment_id format:", payload);
-            db.close();
-            return res.status(400).send(JSON.stringify({code: "3", message: "Invalid user_id or appointment_id format"}));
-        }
+    // Check if the appointment exists for the user
+    const appointment = db.prepare("SELECT * FROM appointments WHERE user_id = ? AND appointment_id = ?").get(userIdInt, appointmentIdInt);
 
-        // Check if the appointment exists for the user
-        const appointment = db.prepare("SELECT * FROM appointments WHERE user_id = ? AND appointment_id = ?").get(userIdInt, appointmentIdInt);
-
-        if (!appointment) {
-            console.log("Appointment not found for user_id:", userIdInt, "appointment_id:", appointmentIdInt);
-            db.close();
-            return res.status(404).send(JSON.stringify({code: "1", message: "Appointment not found"}));
-        }
-
-        // Delete the appointment
-        db.prepare("DELETE FROM appointments WHERE user_id = ? AND appointment_id = ?").run(userIdInt, appointmentIdInt);
-
+    if (!appointment) {
+        console.log("Appointment not found for user_id:", userIdInt, "appointment_id:", appointmentIdInt);
         db.close();
-        console.log("Appointment deleted successfully for user_id:", userIdInt, "appointment_id:", appointmentIdInt);
-        res.send(JSON.stringify({code: "0", message: "Appointment deleted successfully"}));
-    } catch (error) {
-        console.error("Error deleting appointment:", error);
-        res.status(500).send(JSON.stringify({code: "1", error: error.message || "Unknown error"}));
+        return res.status(404).send(JSON.stringify({code: "1", message: "Appointment not found"}));
     }
+
+    // Delete the appointment
+    db.prepare("DELETE FROM appointments WHERE user_id = ? AND appointment_id = ?").run(userIdInt, appointmentIdInt);
+
+    db.close();
+    console.log("Appointment deleted successfully for user_id:", userIdInt, "appointment_id:", appointmentIdInt);
+    res.send(JSON.stringify({code: "0", message: "Appointment deleted successfully"}));
+
 });
 
 // Gets all appointments for a user by user_id
