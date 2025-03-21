@@ -110,7 +110,7 @@ app.get("/logout/", async function(req, res){
 // Creates a new appointment using token, and time
 // Return codes: 0 - appointment created successfully, 1 - error creating appointment, 2 - Invalid Session, 3 - Info missing, 4 - Invalid User ID Format
 app.post("/appointment/create", async function(req, res){
-    var payload = req.body;
+    var payload = req.query;
     console.log("Received appointment creation request:", payload);
 
     if (!(payload.user_id && payload.time && payload.token)) {
@@ -150,7 +150,7 @@ app.post("/appointment/create", async function(req, res){
 // Deletes an appointment by appointment_id and token
 // Return codes: 0 - appointment deleted successfully, 1 - appointment not found, 2 - Invalid token, 3 - Info missing
 app.delete("/appointment/delete", async function(req, res) {
-    var payload = req.body;
+    var payload = req.query;
     console.log("Received appointment deletion request:", payload);
 
     if (!(payload.token && payload.appointment_id)) {
@@ -185,7 +185,7 @@ app.delete("/appointment/delete", async function(req, res) {
 
 });
 
-// Gets all appointments for a user by user_id
+// Gets all appointments for a user by token
 // Return codes: 0 - appointments retrieved successfully, 2 - Invalid Session, 3 - Info missing
 app.get("/appointments/", async function(req, res){
     var payload = req.query;
@@ -229,61 +229,8 @@ app.get("/appointments/", async function(req, res){
     }
 });
 
-// Gets user data by email
-// Return codes: 0 - user data retrieved successfully, 1 - user not found, 3 - Info missing
-app.get("/getUserByEmail", async function(req, res){
-    var payload = req.query;
-    console.log("Received user data request for email:", payload.email);
-
-    if (!payload.email) {
-        console.log("Missing email for user data fetch");
-        return res.send(JSON.stringify({code: "3", message: "Missing email"}));
-    }
-
-    try {
-        // Get user with rowid as uid
-        const db = new database("./databases/main.db");
-        const user = db.prepare("SELECT rowid as uid, * FROM users WHERE email = ?").get(payload.email);
-        db.close();
-        
-        if (user) {
-            console.log("User found with UID:", user.uid);
-            res.send(JSON.stringify({code: "0", user: user}));
-        } else {
-            console.log("User not found for email:", payload.email);
-            res.send(JSON.stringify({code: "1", message: "User not found"}));
-        }
-    } catch (error) {
-        console.error("Error fetching user data:", error);
-        res.send(JSON.stringify({code: "1", error: error.message || "Unknown error"}));
-    }
+app.listen(port, function(){
+    console.log("Listening to port " + port + "!");
 });
 
-app.post('/user/update', async (req, res) => {
-  const { user_id, ...userData } = req.body;
-
-  try {
-    const db = new database('./databases/main.db');
-
-    // Convert userData to JSON string
-    const userDataJson = JSON.stringify(userData);
-
-    // Update the user's data in the database
-    db.prepare('UPDATE users SET data = ? WHERE uid = ?').run(userDataJson, user_id);
-
-    db.close();
-    res.send(JSON.stringify({ code: '0', message: 'User data updated successfully' }));
-  } catch (error) {
-    console.error('Error updating user data:', error);
-    res.status(500).send(JSON.stringify({ code: '1', message: 'Error updating user data' }));
-  }
-});
-
-if (require.main === module) {
-    app.listen(port, function(){
-        console.log("Listening to port " + port + "!");
-    });
-}
-
-module.exports = app;
 
