@@ -321,6 +321,59 @@ app.post('/user/update', async (req, res) => {
   }
 });
 
+app.get("/admin/users", async function (req, res) {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({ code: "3", message: "Unauthorized" });
+    }
+
+    const userId = await authSession(token);
+
+    if (userId !== 30) {
+        return res.status(403).json({ code: "2", message: "Forbidden: Admin access only" });
+    }
+
+    try {
+        const users = getTable("./databases/main.db", "users");
+        return res.json({ code: "0", users });
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        return res.status(500).json({ code: "1", message: "Internal server error" });
+    }
+});
+
+app.post("/admin/createService", async function (req, res) {
+    const token = req.headers.authorization;
+    const { userId, serviceName, serviceDetails } = req.body;
+
+    if (!token) {
+        return res.status(401).json({ code: "3", message: "Unauthorized" });
+    }
+
+    const adminId = await authSession(token);
+
+    if (adminId !== 30) {
+        return res.status(403).json({ code: "2", message: "Forbidden: Admin access only" });
+    }
+
+    if (!userId || !serviceName || !serviceDetails) {
+        return res.status(400).json({ code: "3", message: "Missing required fields" });
+    }
+
+    try {
+        insertInto("./databases/main.db", "services", {
+            user_id: userId,
+            service_name: serviceName,
+            service_details: serviceDetails,
+        });
+        return res.json({ code: "0", message: "Service created successfully" });
+    } catch (error) {
+        console.error("Error creating service:", error);
+        return res.status(500).json({ code: "1", message: "Internal server error" });
+    }
+});
+
 if (require.main === module) {
     app.listen(port, function(){
         console.log("Listening to port " + port + "!");
