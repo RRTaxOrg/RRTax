@@ -1,0 +1,133 @@
+/* FileUploadPage.css */
+
+/* Style the main content area (assumes a sidebar on the left) */
+.file-upload-page {
+    min-width: 200vh;
+    min-height: 100vh; /* Ensure the page takes up the full viewport height */
+    background-image: url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"); /* Background image */
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    display: flex; /* Use flexbox to center the content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px; /* Add padding to prevent content from touching the edges */
+    margin-left: 200px; /* Adjust for the sidebar width (adjust this value based on your sidebar) */
+  }
+  
+  /* Style the file upload container */
+  .file-upload-container {
+    background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-height: 2000px;
+    max-width: 700px; /* Limit the width of the container */
+    width: 100%; /* Ensure it takes up available space */
+    text-align: center; /* Center the text inside */
+  }
+  
+  /* Style the heading */
+  .file-upload-container h2 {
+    margin-bottom: 20px;
+    color: #333; /* Darker text color for contrast */
+  }
+  
+  /* Style the upload form */
+  .upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between form elements */
+    margin-bottom: 20px;
+  }
+  
+  /* Style the file input */
+  .file-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Style the category select dropdown */
+  .category-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+  }
+  
+  /* Style the upload button */
+  .upload-button {
+    padding: 10px;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Smooth hover effect */
+  }
+  
+  /* Hover effect for the upload button */
+  .upload-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style the upload status message */
+  .upload-status {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  /* Success message styling */
+  .upload-status.success {
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+  }
+  
+  /* Error message styling */
+  .upload-status.error {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+  }
+  
+  /* Style the uploaded files section */
+  .uploaded-files {
+    text-align: left;
+  }
+  
+  /* Style the file categories */
+  .file-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Style each file category */
+  .file-category {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Style the category heading */
+  .file-category h4 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* Style the list of files */
+  .file-category ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Style each file item */
+  .file-category li {
+    padding: 5px 0;
+    color: #555;
+  }
