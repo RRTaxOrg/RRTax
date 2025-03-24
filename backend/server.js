@@ -107,6 +107,28 @@ app.get("/logout/", async function(req, res){
     res.send(JSON.stringify({code: "0"}));
 })
 
+// Get user info based off of token field
+// Return codes: 0 success, 1 - Failed to Fetch User, 2 - Invalid Session, 3 - Info missing
+app.get("/user/", async function(req, res) {
+    var payload = req.query;
+    
+    if (!payload.token) {
+        res.send(JSON.stringify({code: "3"}));
+    }
+
+    var userId = authSession(payload.token);
+
+    if (!userId) {
+        res.send(JSON.stringify({code: "2"}));
+    }
+    var user = getRow("./databases/main.db", "users", {uid: userId});
+    if (!user) {
+        console.log("Failed to fetch user");
+        res.send(JSON.stringify({code: "1"}));
+    }
+    res.send(JSON.stringify({code: "0", user: user}));
+})
+
 // Creates a new appointment using token, and time
 // Return codes: 0 - appointment created successfully, 1 - error creating appointment, 2 - Invalid Session, 3 - Info missing, 4 - Invalid User ID Format
 app.post("/appointment/create", async function(req, res){
@@ -167,20 +189,7 @@ app.delete("/appointment/delete", async function(req, res) {
         return res.status(400).send(JSON.stringify({code: "2", message: "Invalid token or appointment"}));
     }
 
-    // Check if the appointment exists for the user
-    const appointment = db.prepare("SELECT * FROM appointments WHERE user_id = ? AND appointment_id = ?").get(userIdInt, appointmentIdInt);
-
-    if (!appointment) {
-        console.log("Appointment not found for user_id:", userIdInt, "appointment_id:", appointmentIdInt);
-        db.close();
-        return res.status(404).send(JSON.stringify({code: "1", message: "Appointment not found"}));
-    }
-
-    // Delete the appointment
-    db.prepare("DELETE FROM appointments WHERE user_id = ? AND appointment_id = ?").run(userIdInt, appointmentIdInt);
-
-    db.close();
-    console.log("Appointment deleted successfully for user_id:", userIdInt, "appointment_id:", appointmentIdInt);
+    var result = deleteRow("./databases/main.db", "appointments", {appointment_id: appointmentIdInt, user_id: userIdInt})
     res.send(JSON.stringify({code: "0", message: "Appointment deleted successfully"}));
 
 });
@@ -204,29 +213,12 @@ app.get("/appointments/", async function(req, res){
         console.log("Invalid Session");
         return res.status(400).send(JSON.stringify({code: "2", message: "Invalid session"}));
     }
-
-    try {
-        const db = new database("./databases/main.db");
-        
-        // Convert user_id to INTEGER to avoid datatype mismatch
-        const userIdInt = parseInt(userId);
-        
-        if (isNaN(userIdInt)) {
-            console.error("Invalid user ID format:", userId);
-            db.close();
-            return res.status(400).send(JSON.stringify({code: "3", message: "Invalid user ID format"}));
-        }
-        
-        // Get appointments for this user, using the correct column structure
-        const appointments = db.prepare("SELECT * FROM appointments WHERE user_id = ?").all(userIdInt);
-        
-        db.close();
-        console.log(`Found ${appointments.length} appointments for user ID ${userId}`);
-        res.send(JSON.stringify({code: "0", appointments: appointments}));
-    } catch (error) {
-        console.error("Error fetching appointments:", error);
-        res.status(500).send(JSON.stringify({code: "1", error: error.message || "Unknown error"}));
-    }
+    
+    // Get appointments for this user, using the correct column structure
+    const appointments = getRow("./databases/main.db", "appointments", {user_id: userId});
+    
+    console.log(`Found ${appointments.length} appointments for user ID ${userId}`);
+    res.send(JSON.stringify({code: "0", appointments: appointments}));
 });
 
 app.listen(port, function(){

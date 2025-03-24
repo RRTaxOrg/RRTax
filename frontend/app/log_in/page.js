@@ -84,7 +84,9 @@ export default function LoginPage() {
       if (loginData.code === "0") {
         console.log("User logged in successfully", loginData.token);
         // Pass email to the logged_in page
-        router.push(`/logged_in?token=${loginData.token}&email=${encodeURIComponent(email)}`);
+        localStorage.setItem("userRRTAXToken", loginData.token);
+        router.push(`/logged_in/`);
+        //router.push(`/logged_in?token=${loginData.token}&email=${encodeURIComponent(email)}`);
       } else if (loginData.code === "1") {
         setErrorMessage("Email not found.");
       } else if (loginData.code === "2") {

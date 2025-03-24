@@ -11,8 +11,7 @@ import '../styles/LoggedInPage.css';
 export default function LoggedInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = localStorage.getItem('userRRTAXToken');
-  const email = searchParams.get('email');
+  const token = null;
 
   const [user, setUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
@@ -24,38 +23,35 @@ export default function LoggedInPage() {
 
   // Fetch user data on component mount
   useEffect(() => {
+    console.log("RUNNING INITIALIZATION");
+    token = localStorage.getItem('userRRTAXToken');
     if (!token) {
       console.error("Token is missing");
       router.push('/');
       return;
     }
 
-    if (!email) {
-      console.error("Email is missing");
-      router.push('/');
-      return;
-    }
-
-    // Get user data including uid from email
+    // Get user data including uid from token
     fetchUserData();
-  }, [token, email, router]);
+  }, []);
 
-  // Function to fetch user data using the email
+  // Function to fetch user data using the token
   const fetchUserData = async () => {
+    console.log("Fetching user data");
     try {
       setLoading(true);
-      console.log("Fetching user data for email:", email);
+      console.log("Fetching user data for token:", token);
       
-      const response = await fetch(`http://localhost:3001/getUserByEmail?email=${encodeURIComponent(email)}`);
+      const response = await fetch(`http://localhost:3001/user/?token=${token}`);
       const data = await response.json();
       
       console.log("User data response:", data);
       
-      if (data.code === "0" && data.user) {
+      if (data.code == "0" && data.user) {
         setUser(data.user);
         console.log("User found with UID:", data.user.uid);
         // Now fetch appointments for this user
-        fetchAppointments(data.user.uid);
+        fetchAppointments(token);
       } else {
         setError("Could not retrieve user data");
       }
@@ -68,15 +64,15 @@ export default function LoggedInPage() {
   };
 
   // Function to fetch appointments for a user
-  const fetchAppointments = async (userId) => {
-    if (!userId) {
-      console.error("Cannot fetch appointments without user ID");
+  const fetchAppointments = async (token) => {
+    if (!token) {
+      console.error("Cannot fetch appointments without token");
       return;
     }
 
     try {
-      console.log("Fetching appointments for user ID:", userId);
-      const response = await fetch(`http://localhost:3001/appointments/?user_id=${userId}`);
+      console.log("Fetching appointments for token:", token);
+      const response = await fetch(`http://localhost:3001/appointments/?token=${token}`);
       const data = await response.json();
       
       console.log("Appointments response:", data);
@@ -99,8 +95,8 @@ export default function LoggedInPage() {
       return;
     }
 
-    if (!user || !user.uid) {
-      setError("User data not available");
+    if (!token) {
+      setError("Token not available");
       return;
     }
 
@@ -110,21 +106,16 @@ export default function LoggedInPage() {
       // Convert selected time to Unix timestamp
       const unixTime = Math.floor(new Date(time).getTime() / 1000);
       
-      // Generate a unique appointment ID
-      // We'll use a numeric ID since the column might be INTEGER type
-      const appointmentId = Date.now();
-      
-      console.log("Creating appointment with user_id:", user.uid);
+      console.log("Creating appointment with token:", token);
 
-      const response = await fetch('http://localhost:3001/appointment/create', {
+      const response = await fetch('http://localhost:3001/appointment/create/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_id: parseInt(user.uid), // Ensure it's an integer
-          time: String(unixTime),      // Send as string to handle TEXT column type
-          appId: appointmentId         // This might be used as an INTEGER
+          token: token, // Ensure it's an integer
+          time: unixTime      // Send as string to handle TEXT column type
         }),
       });
       
@@ -135,7 +126,7 @@ export default function LoggedInPage() {
         console.log("Appointment created successfully");
         setTime(''); // Reset time input
         // Refresh appointments list
-        fetchAppointments(user.uid);
+        fetchAppointments(token);
         setError(''); // Clear any errors
       } else {
         setError(`Failed to create appointment: ${data.error || "Unknown error"}`);
@@ -150,8 +141,8 @@ export default function LoggedInPage() {
 
   // Function to delete an appointment
   const handleDeleteAppointment = async (appointmentId) => {
-    if (!user || !user.uid) {
-      setError("User data not available");
+    if (!token) {
+      setError("Token not available");
       return;
     }
 
@@ -164,8 +155,8 @@ export default function LoggedInPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_id: parseInt(user.uid), // Ensure it's an integer
-          appointment_id: appointmentId,
+          token: token, // Ensure it's an integer
+          appointment_id: appointmentId
         }),
       });
 
@@ -175,7 +166,7 @@ export default function LoggedInPage() {
       if (data.code === "0") {
         console.log("Appointment deleted successfully");
         // Refresh appointments list
-        fetchAppointments(user.uid);
+        fetchAppointments(token);
         setError(''); // Clear any errors
       } else {
         setError(`Failed to delete appointment: ${data.message || "Unknown error"}`);
@@ -231,7 +222,7 @@ export default function LoggedInPage() {
       <div className="flex flex-grow">
         <VerticalNavBar setActiveTab={setActiveTab} handleLogout={handleLogout} />
         
-          {activeTab === 'dashboard' && <LandingPage user={user} email={email} />}
+          {activeTab === 'dashboard' && <LandingPage user={user} />}
           {activeTab === 'appointments' && (
             <AppointmentsPage
               user={user}

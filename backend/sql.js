@@ -58,7 +58,7 @@ function insertInto(DBPath, table, data) {
     return 0;
 }
 
-// Gets row with specified 'selectData' in specified table in specified DB
+// Gets rows with specified 'selectData' in specified table in specified DB
 // Example: getRow("./databases/main.db", "users", { username: "JohnDoe" })
 // Returns: JSON object representing row OR null if row not found
 function getRow(DBPath, table, selectData) {
@@ -76,16 +76,16 @@ function getRow(DBPath, table, selectData) {
     }
 
     // Query the databse using the specified parameters
-    var row;
+    var rows;
     try {
         var db = new database(DBPath);
-        row = db.prepare(`SELECT * FROM ${table} WHERE ${selectInfo}`).get();
+        rows = db.prepare(`SELECT * FROM ${table} WHERE ${selectInfo}`).get();
         db.close();
     } catch (error) {
         return error;
     }
     
-    return row;
+    return rows;
 }
 
 // Updates row specificed by 'selectData' with data in 'updateData' in specified table in specified DB
