@@ -13,6 +13,13 @@
     align-items: center; /* Center vertically */
     padding: 20px; /* Add padding to prevent content from touching the edges */
     margin-left: 200px; /* Adjust for the sidebar width (adjust this value based on your sidebar) */
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   
   /* Style the file upload container */
@@ -25,12 +32,36 @@
     max-width: 700px; /* Limit the width of the container */
     width: 100%; /* Ensure it takes up available space */
     text-align: center; /* Center the text inside */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
   }
   
   /* Style the heading */
   .file-upload-container h2 {
     margin-bottom: 20px;
     color: #333; /* Darker text color for contrast */
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    margin-top: 0;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .file-upload-container h3 {
+    font-size: 20px;
+    margin: 30px 0 15px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
   }
   
   /* Style the upload form */
@@ -39,6 +70,10 @@
     flex-direction: column;
     gap: 15px; /* Space between form elements */
     margin-bottom: 20px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
   }
   
   /* Style the file input */
@@ -47,6 +82,13 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
   }
   
   /* Style the category select dropdown */
@@ -56,6 +98,18 @@
     border-radius: 5px;
     background-color: #f9f9f9;
     font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    background-color: #fff;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
   
   /* Style the upload button */
@@ -68,11 +122,32 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s; /* Smooth hover effect */
+    padding: 12px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
   }
   
   /* Hover effect for the upload button */
   .upload-button:hover {
     background-color: #0056b3; /* Darker blue on hover */
+    background-color: #45a049;
+  }
+
+  .upload-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
   }
   
   /* Style the upload status message */
@@ -80,18 +155,32 @@
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
   }
   
   /* Success message styling */
   .upload-status.success {
     background-color: #d4edda; /* Light green background */
     color: #155724; /* Dark green text */
+    background-color: #ddffdd;
+    color: #006600;
+    background-color: #e8f5e9;
+    color: #2e7d32;
   }
   
   /* Error message styling */
   .upload-status.error {
     background-color: #f8d7da; /* Light red background */
     color: #721c24; /* Dark red text */
+    background-color: #ffdddd;
+    color: #ff0000;
+    background-color: #ffebee;
+    color: #c62828;
   }
   
   /* Style the uploaded files section */
@@ -104,6 +193,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
   }
   
   /* Style each file category */
@@ -112,22 +204,139 @@
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 15px;
+    border: 1px solid #eee;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    padding: 15px;
   }
   
   /* Style the category heading */
   .file-category h4 {
     margin-bottom: 10px;
     color: #333;
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
   }
   
   /* Style the list of files */
   .file-category ul {
     list-style-type: none;
     padding: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
   }
   
   /* Style each file item */
   .file-category li {
     padding: 5px 0;
     color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .file-category li:last-child {
+    border-bottom: none;
+  }
+
+  .file-actions {
+    display: flex;
+    gap: 10px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .download-btn {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    background-color: #2196f3;
+    color: white;
+  }
+
+  .download-btn:hover {
+    background-color: #3367d6;
+  }
+
+  .delete-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    background-color: #f44336;
+    color: white;
+  }
+
+  .delete-btn:hover {
+    background-color: #d32f2f;
+  }
+
+  .no-files {
+    font-style: italic;
+    color: #777;
+    text-align: center;
+    padding: 15px 0;
+    color: #757575;
+    font-style: italic;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .file-upload-page {
+      padding: 15px;
+    }
+  
+    .file-upload-container {
+      padding: 15px;
+    }
+  
+    .upload-button {
+      padding: 10px 15px;
+    }
+  }
+
+  .debug-section {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 12px;
   }

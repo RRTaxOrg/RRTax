@@ -247,7 +247,9 @@ export default function LoggedInPage() {
               setTime={setTime}
             />
           )}
-          {activeTab === 'files' && <FilesPage />}
+          {/* pas in user from logfed in page to files just like we do for appointments */}
+          {/* this would be changed later using local and sessions json */}
+          {activeTab === 'files' && <FilesPage user={user} />}
           {activeTab === 'account-settings' && <AccountSettingsPage user={user} />}
         
       </div>

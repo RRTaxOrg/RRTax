@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const port = 3001;
+const port = 3001; // our port do not change this as localhost:3001 is used in the frontend and 300 is used by netxjs
 const database = require("better-sqlite3");
 const multer = require("multer");
 const path = require("path");
@@ -68,30 +68,51 @@ app.post("/api/files/upload", upload.single("file"), async (req, res) => {
     return res.status(400).json({ code: "3", message: "Missing required fields" });
   }
 
+  // Validate that user_id is a proper integer
+  // just do this as a check for now there are some other Nan checks as well
+  // somtimes the user_id is a string when it comes from the frontend
+  const userId = parseInt(user_id);
+  if (isNaN(userId) || userId <= 0) {
+    console.error("Invalid user_id format:", user_id);
+    return res.status(400).json({ code: "3", message: "Invalid user ID format" });
+  }
+
   try {
+    // Verify user exists before uploading file, just checks if the user exists via rowid adn user_id
+    const userDb = new database("./databases/main.db");
+    const user = userDb.prepare("SELECT rowid as uid FROM users WHERE rowid = ?").get(userId);
+    userDb.close();
+    // non 0 code = err
+    if (!user) {
+      console.error("User not found with ID:", userId);
+      return res.status(404).json({ code: "1", message: "User not found" });
+    }
+
     const db = new database("./databases/main.db");
     const stmt = db.prepare(`
       INSERT INTO files (user_id, filetype, name, path, time)
       VALUES (?, ?, ?, ?, ?)
     `);
+    // this stmt was there before but missing user id
     stmt.run(
-      parseInt(user_id),         // user_id (integer)
-      file.mimetype,                  // filetype (text, using category as the file type)
-      file.originalname,         // name (text, original file name)
-      file.path,                 // path (text, path to the file in uploads/)
-      Math.floor(Date.now() / 1000) // time (integer, Unix timestamp)
+      userId,                        // user_id (integer) - validated above
+      category,                      // filetype (using the category parameter)
+      file.originalname,             // name (text, original file name)
+      file.path,                     // path (text, path to the file in uploads/)
+      Math.floor(Date.now() / 1000)  // time (integer, Unix timestamp)
     );
     db.close();
-    console.log("File uploaded and saved to database:", file.originalname); // Log success
+    console.log("File uploaded and saved to database for user:", userId);
     res.json({ code: "0", message: "File uploaded successfully" });
   } catch (error) {
-    console.error("Error uploading file:", error); // Log the error details
+    console.error("Error uploading file:", error);
     res.status(500).json({ code: "1", message: error.message || "Server error" });
   }
 });
 
 // Get user's files
 app.get("/api/files", async (req, res) => {
+  console.log("Received files request:", req.query);
   const { user_id } = req.query;
 
   if (!user_id) {
@@ -100,13 +121,47 @@ app.get("/api/files", async (req, res) => {
 
   try {
     const db = new database("./databases/main.db");
-    const files = db.prepare("SELECT * FROM files WHERE user_id = ?").all(parseInt(user_id));
+    
+    // First check and log the database schema do this beacuse trying to delete or download was giving a row not found or null fileid
+    console.log("Checking files table schema:");
+    const tableInfo = db.prepare("PRAGMA table_info(files)").all();
+    console.log(tableInfo);
+
+    // Get all files for the user and include rowid
+    const query = `
+      SELECT 
+        rowid,
+        id,
+        user_id,
+        filetype,
+        name,
+        path,
+        time
+      FROM files 
+      WHERE user_id = ?
+    `;
+    
+    const files = db.prepare(query).all(parseInt(user_id));
+    
+    // Ensure every file has a valid id field to send back
+    const processedFiles = files.map(file => {
+      // Use rowid as id if id is not present this works alright 
+      if (!file.id && file.rowid) {
+        file.id = file.rowid;
+      }
+      console.log(`Processed file: ${file.name}, ID: ${file.id}, rowid: ${file.rowid}`);
+      return file;
+    });
+    
     db.close();
 
+    console.log("Files found:", processedFiles);
+
+      // before we did not porccess the files now we do 
     const organizedFiles = {
-      t4_t4a: files.filter((f) => f.filetype === "t4_t4a"),
-      education: files.filter((f) => f.filetype === "education"),
-      other: files.filter((f) => f.filetype === "other"),
+      t4_t4a: processedFiles.filter((f) => f.filetype === "t4_t4a"),
+      education: processedFiles.filter((f) => f.filetype === "education"),
+      other: processedFiles.filter((f) => f.filetype === "other"),
     };
 
     res.json({ code: "0", files: organizedFiles });
@@ -121,22 +176,45 @@ app.get("/api/files/download", async (req, res) => {
   const { file_id, user_id } = req.query;
 
   if (!file_id || !user_id) {
+    // added logs that were missing 
+    console.error(`Missing required parameters: file_id=${file_id}, user_id=${user_id}`);
     return res.status(400).json({ code: "3", message: "Missing required fields" });
   }
 
   try {
+    // logs for err handle
+    console.log(`Attempting to download file_id=${file_id} for user_id=${user_id}`);
+    
     const db = new database("./databases/main.db");
-    const file = db.prepare("SELECT * FROM files WHERE id = ? AND user_id = ?").get(
+    
+    // Log all files for this user to debug can remove later just fro debuging
+    const allUserFiles = db.prepare("SELECT rowid, id, name FROM files WHERE user_id = ?").all(parseInt(user_id));
+    console.log("All files for user:", allUserFiles);
+    
+    // First try to get the file by rowid this seems to work the best and we still locate the file by user id so its safe
+    const file = db.prepare("SELECT * FROM files WHERE rowid = ? AND user_id = ?").get(
       parseInt(file_id),
       parseInt(user_id)
     );
+    
     db.close();
 
     if (!file) {
+      // logs
+      console.log(`No file found with rowid=${file_id} for user_id=${user_id}`);
       return res.status(404).json({ code: "1", message: "File not found" });
     }
 
-    res.download(file.path, file.name); // Use path and name
+    // logs
+    console.log("Found file:", file);
+
+    // Check if file exists in filesystem
+    if (!fs.existsSync(file.path)) {
+      console.error(`File not found on server: ${file.path}`);
+      return res.status(404).json({ code: "1", message: "File not found on server" });
+    }
+
+    res.download(file.path, file.name);
   } catch (error) {
     console.error("Error downloading file:", error);
     res.status(500).json({ code: "1", error: error.message });
@@ -153,7 +231,9 @@ app.delete("/api/files/delete", async (req, res) => {
 
   try {
     const db = new database("./databases/main.db");
-    const file = db.prepare("SELECT * FROM files WHERE id = ? AND user_id = ?").get(
+    
+    // Use rowid to query the file before we used id but id dose not exists
+    const file = db.prepare("SELECT * FROM files WHERE rowid = ? AND user_id = ?").get(
       parseInt(file_id),
       parseInt(user_id)
     );
@@ -166,8 +246,8 @@ app.delete("/api/files/delete", async (req, res) => {
     // Delete file from filesystem
     fs.unlinkSync(file.path); // Use path
 
-    // Delete file record from database
-    db.prepare("DELETE FROM files WHERE id = ? AND user_id = ?").run(
+    // Delete file record from database with correct column name usign row id again for id 
+    db.prepare("DELETE FROM files WHERE rowid = ? AND user_id = ?").run(
       parseInt(file_id),
       parseInt(user_id)
     );
