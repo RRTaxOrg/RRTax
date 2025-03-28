@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import { ChevronDownIcon, UserCircleIcon, EnvelopeIcon, PhoneIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
@@ -154,7 +154,6 @@ export default function ContactUs() {
 
 
 }
-
 
 
 

@@ -37,10 +37,7 @@ export default function LoginPage() {
       if (signupData.code === "0") {
         console.log("User created successfully", signupData.token);
         // Pass email to the logged_in page
-        localStorage.setItem("userRRTAXToken", signupData.token);
-        //localStorage.getItem("userRRTAXToken");
-        //router.push(`/logged_in?token=${signupData.token}&email=${encodeURIComponent(email)}`);
-        router.push("/logged_in/");
+        router.push(`/logged_in?token=${signupData.token}&email=${encodeURIComponent(email)}`);
       } else if (signupData.code === "1") {
         setErrorMessage("Email already in use.");
       } else if (signupData.code === "2") {
@@ -84,9 +81,7 @@ export default function LoginPage() {
       if (loginData.code === "0") {
         console.log("User logged in successfully", loginData.token);
         // Pass email to the logged_in page
-        localStorage.setItem("userRRTAXToken", loginData.token);
-        router.push(`/logged_in/`);
-        //router.push(`/logged_in?token=${loginData.token}&email=${encodeURIComponent(email)}`);
+        router.push(`/logged_in?token=${loginData.token}&email=${encodeURIComponent(email)}`);
       } else if (loginData.code === "1") {
         setErrorMessage("Email not found.");
       } else if (loginData.code === "2") {
@@ -99,53 +94,55 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-customWhite mt-20">
-      <div className="flex flex-col items-center w-full max-w-md space-y-8">
-        <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={500} height={500} />
-        <div className="w-full p-8 space-y-8 bg-white rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-center text-customBlue">{isSignUp ? "Sign Up" : "Login"}</h2>
-          <form className="mt-8 space-y-6 text-black">
-            <input
-              id="email-address"
-              type="email"
-              required
-              placeholder="Email address"
-              className="w-full px-3 py-2 border rounded-t-md"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {isSignUp && (
+    <section id="log_in" className="tab-content active">
+      <div className="flex items-center justify-center bg-customWhite offset-top-232">
+        <div className="flex flex-col items-center w-full max-w-md space-y-8">
+          <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={500} height={500} />
+          <div className="w-full p-8 space-y-8 bg-white rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold text-center text-customBlue">{isSignUp ? "Sign Up" : "Login"}</h2>
+            <form className="mt-8 space-y-6 text-black">
               <input
-                id="username"
-                type="text"
+                id="email-address"
+                type="email"
                 required
-                placeholder="Username"
+                placeholder="Email address"
                 className="w-full px-3 py-2 border rounded-t-md"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-            )}
-            <input
-              id="password"
-              type="password"
-              required
-              placeholder="Password"
-              className="w-full px-3 py-2 border rounded-b-md"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-            {isSignUp ? (
-              <button onClick={handleSignup} className="w-full px-4 py-2 text-customWhite bg-customBlue rounded-md">Sign up</button>
-            ) : (
-              <button onClick={handleLogin} className="w-full px-4 py-2 text-customWhite bg-customBlue rounded-md">Sign in</button>
-            )}
-          </form>
-          <button onClick={() => setIsSignUp(!isSignUp)} className="w-full px-4 py-2 text-customWhite bg-gray-500 rounded-md">
-            {isSignUp ? "Already have an account? Sign in" : "Don't have an account? Sign up"}
-          </button>
+              {isSignUp && (
+                <input
+                  id="username"
+                  type="text"
+                  required
+                  placeholder="Username"
+                  className="w-full px-3 py-2 border rounded-t-md"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              )}
+              <input
+                id="password"
+                type="password"
+                required
+                placeholder="Password"
+                className="w-full px-3 py-2 border rounded-b-md"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              {isSignUp ? (
+                <button onClick={handleSignup} className="w-full px-4 py-2 text-customWhite bg-customBlue rounded-md">Sign up</button>
+              ) : (
+                <button onClick={handleLogin} className="w-full px-4 py-2 text-customWhite bg-customBlue rounded-md">Sign in</button>
+              )}
+            </form>
+            <button onClick={() => setIsSignUp(!isSignUp)} className="w-full px-4 py-2 text-customWhite bg-gray-500 rounded-md">
+              {isSignUp ? "Already have an account? Sign in" : "Don't have an account? Sign up"}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
