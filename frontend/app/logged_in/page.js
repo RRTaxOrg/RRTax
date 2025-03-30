@@ -11,7 +11,7 @@ import '../styles/LoggedInPage.css';
 export default function LoggedInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = null;
+  var token = null;
 
   const [user, setUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
@@ -24,7 +24,7 @@ export default function LoggedInPage() {
   // Fetch user data on component mount
   useEffect(() => {
     console.log("RUNNING INITIALIZATION");
-    token = localStorage.getItem('userRRTAXToken');
+    token = localStorage.getItem('rrtaxtoken');
     if (!token) {
       console.error("Token is missing");
       router.push('/');

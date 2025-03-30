@@ -32,19 +32,19 @@ export default function RootLayout({ children }) {
             <Image src={navImage} alt="Logo" width={200} height={200}/>
             <ul>
               <li>
-                <a href="#home" onClick={(e) => {e.preventDefault(); navigateTo("/");}}>Home</a>
+                <a onClick={(e) => {e.preventDefault(); navigateTo("/");}}>Home</a>
               </li>
               <li>
-                <a href="#about" onClick={(e) => {e.preventDefault(); navigateTo("/aboutus");}}>About Us</a>
+                <a onClick={(e) => {e.preventDefault(); navigateTo("/aboutus");}}>About Us</a>
               </li>
               <li>
-                <a href="#services" onClick={(e) => {e.preventDefault(); navigateTo("/services");}}>Services</a>
+                <a onClick={(e) => {e.preventDefault(); navigateTo("/services");}}>Services</a>
               </li>
               <li>
-                <a href="#resources" onClick={(e) => {e.preventDefault(); navigateTo("/resources");}}>Resources</a>
+                <a onClick={(e) => {e.preventDefault(); navigateTo("/resources");}}>Resources</a>
               </li>
               <li>
-                <a href="#contactus" onClick={(e) => {e.preventDefault(); navigateTo("/contactus");}}>Contact Us</a>
+                <a onClick={(e) => {e.preventDefault(); navigateTo("/contactus");}}>Contact Us</a>
               </li>
             </ul>
             <button className="login-btn" onClick={(e) => {e.preventDefault(); navigateTo("/log_in");}}>Login</button>

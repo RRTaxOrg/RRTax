@@ -129,6 +129,7 @@ app.get("/signup/", async function(req, res){
 // Log user out based off of token field
 // Return codes: 0 success, 3 - Info missing
 app.get("/logout/", async function(req, res){
+    res.set("Content-Type", "application/json");
     var payload = req.query;
     
     if (!payload.token) {
@@ -143,23 +144,33 @@ app.get("/logout/", async function(req, res){
 // Get user info based off of token field
 // Return codes: 0 success, 1 - Failed to Fetch User, 2 - Invalid Session, 3 - Info missing
 app.get("/user/", async function(req, res) {
+    res.set("Content-Type", "application/json");
     var payload = req.query;
     
     if (!payload.token) {
         res.send(JSON.stringify({code: "3"}));
     }
+    else {
+      var userId = authSession(payload.token);
 
-    var userId = authSession(payload.token);
+      if (!userId) {
+          res.send(JSON.stringify({code: "2"}));
+      }
+      else {
+        var user = getRow("./databases/main.db", "users", {uid: userId});
+        if (!user) {
+            console.log("Failed to fetch user");
+            res.send(JSON.stringify({code: "1"}));
+        }
+        else {
+          res.send(JSON.stringify({code: "0", user: user})); 
+        }
+        
+      }
+       
+    }
 
-    if (!userId) {
-        res.send(JSON.stringify({code: "2"}));
-    }
-    var user = getRow("./databases/main.db", "users", {uid: userId});
-    if (!user) {
-        console.log("Failed to fetch user");
-        res.send(JSON.stringify({code: "1"}));
-    }
-    res.send(JSON.stringify({code: "0", user: user}));
+    
 })
 
 // Upload file
