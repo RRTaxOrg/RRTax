@@ -1,3 +1,5 @@
+'use client';
+
 export default function LandingPage({ user, email }) {
   return (
     <div className="main-content flex flex-col min-h-screen bg-gray-50 mt-20 mb-20">

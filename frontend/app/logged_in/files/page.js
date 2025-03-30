@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import "./FileUploadPage.css"; // Import the CSS file for styling
 

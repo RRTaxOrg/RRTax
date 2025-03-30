@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
 
 export default function AppointmentsPage({ user, fetchAppointments, formatAppointmentTime, handleCreateAppointment, handleDeleteAppointment, loading, error, appointments, bookedTimeSlots, time, setTime }) {

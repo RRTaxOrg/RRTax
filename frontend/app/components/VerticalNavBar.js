@@ -1,34 +1,32 @@
-import Link from 'next/link';
-import Image from 'next/image';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import '../styles/LoggedInPage.css'; // Ensure you import the CSS file
 
-export default function VerticalNavBar({ setActiveTab, handleLogout }) {
+export default function VerticalNavBar({ setActiveTab }) {
+  const router = useRouter();
+
+  const handleNavigation = (tab) => {
+    setActiveTab(tab);
+    router.push(`/logged_in/${tab}`);
+  };
+
   return (
-    <nav className="vertical-nav">
-      <div className="logo-container">
-        <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={200} height={200} />
-      </div>
+    <nav className="w-64 bg-gray-100 p-4">
       <ul>
         <li>
-          <a href="#dashboard" onClick={(e) => {e.preventDefault(); setActiveTab('dashboard'); window.scrollTo(0, 0);}}>Dashboard</a>
+          <button onClick={() => handleNavigation('dashboard')}>Dashboard</button>
         </li>
-       </ul>
-       <ul>
         <li>
-          <a href="#appointments" onClick={(e) => {e.preventDefault(); setActiveTab('appointments'); window.scrollTo(0, 0);}}>My Appointments</a>
+          <button onClick={() => handleNavigation('appointments')}>Appointments</button>
         </li>
-       </ul>
-       <ul>
         <li>
-          <a href="#files" onClick={(e) => {e.preventDefault(); setActiveTab('files'); window.scrollTo(0, 0);}}>My Files</a>
+          <button onClick={() => handleNavigation('files')}>Files</button>
         </li>
-       </ul>
-       <ul>
         <li>
-          <a href="#account-settings" onClick={(e) => {e.preventDefault(); setActiveTab('account-settings'); window.scrollTo(0, 0);}}>Account Settings</a>
+          <button onClick={() => handleNavigation('account-settings')}>Account Settings</button>
         </li>
       </ul>
-      <button className="logout-btn" onClick={handleLogout}>Log out</button>
     </nav>
   );
 }
