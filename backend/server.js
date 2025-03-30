@@ -47,12 +47,12 @@ if (!fs.existsSync("uploads")) {
 const db = new database("./databases/main.db");
 db.prepare(`
   CREATE TABLE IF NOT EXISTS files (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    file_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     filetype TEXT NOT NULL,
     name TEXT NOT NULL,
     path TEXT NOT NULL,
-    time INTEGER NOT NULL
+    time TEXT NOT NULL
   )
 `).run();
 db.close();
@@ -131,7 +131,7 @@ app.get("/api/files", async (req, res) => {
     const query = `
       SELECT 
         rowid,
-        id,
+        file_id,
         user_id,
         filetype,
         name,
@@ -145,11 +145,9 @@ app.get("/api/files", async (req, res) => {
     
     // Ensure every file has a valid id field to send back
     const processedFiles = files.map(file => {
-      // Use rowid as id if id is not present this works alright 
-      if (!file.id && file.rowid) {
-        file.id = file.rowid;
-      }
-      console.log(`Processed file: ${file.name}, ID: ${file.id}, rowid: ${file.rowid}`);
+      // Use file_id as id if id is not present
+      file.id = file.file_id || file.rowid;
+      console.log(`Processed file: ${file.name}, ID: ${file.id}, rowid: ${file.rowid}, file_id: ${file.file_id}`);
       return file;
     });
     
@@ -188,20 +186,28 @@ app.get("/api/files/download", async (req, res) => {
     const db = new database("./databases/main.db");
     
     // Log all files for this user to debug can remove later just fro debuging
-    const allUserFiles = db.prepare("SELECT rowid, id, name FROM files WHERE user_id = ?").all(parseInt(user_id));
+    const allUserFiles = db.prepare("SELECT rowid, file_id, name FROM files WHERE user_id = ?").all(parseInt(user_id));
     console.log("All files for user:", allUserFiles);
     
-    // First try to get the file by rowid this seems to work the best and we still locate the file by user id so its safe
-    const file = db.prepare("SELECT * FROM files WHERE rowid = ? AND user_id = ?").get(
+    // Try to get the file by file_id (or rowid if that fails)
+    let file = db.prepare("SELECT * FROM files WHERE file_id = ? AND user_id = ?").get(
       parseInt(file_id),
       parseInt(user_id)
     );
+    
+    // If not found by file_id, try by rowid
+    if (!file) {
+      file = db.prepare("SELECT * FROM files WHERE rowid = ? AND user_id = ?").get(
+        parseInt(file_id),
+        parseInt(user_id)
+      );
+    }
     
     db.close();
 
     if (!file) {
       // logs
-      console.log(`No file found with rowid=${file_id} for user_id=${user_id}`);
+      console.log(`No file found with id=${file_id} for user_id=${user_id}`);
       return res.status(404).json({ code: "1", message: "File not found" });
     }
 
@@ -232,11 +238,19 @@ app.delete("/api/files/delete", async (req, res) => {
   try {
     const db = new database("./databases/main.db");
     
-    // Use rowid to query the file before we used id but id dose not exists
-    const file = db.prepare("SELECT * FROM files WHERE rowid = ? AND user_id = ?").get(
+    // Try to get the file by file_id first
+    let file = db.prepare("SELECT * FROM files WHERE file_id = ? AND user_id = ?").get(
       parseInt(file_id),
       parseInt(user_id)
     );
+    
+    // If not found by file_id, try by rowid
+    if (!file) {
+      file = db.prepare("SELECT * FROM files WHERE rowid = ? AND user_id = ?").get(
+        parseInt(file_id),
+        parseInt(user_id)
+      );
+    }
 
     if (!file) {
       db.close();
@@ -247,10 +261,17 @@ app.delete("/api/files/delete", async (req, res) => {
     fs.unlinkSync(file.path); // Use path
 
     // Delete file record from database with correct column name usign row id again for id 
+    // Try both methods to ensure deletion
+    db.prepare("DELETE FROM files WHERE file_id = ? AND user_id = ?").run(
+      parseInt(file_id),
+      parseInt(user_id)
+    );
+    
     db.prepare("DELETE FROM files WHERE rowid = ? AND user_id = ?").run(
       parseInt(file_id),
       parseInt(user_id)
     );
+    
     db.close();
 
     res.json({ code: "0", message: "File deleted successfully" });
