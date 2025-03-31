@@ -28,7 +28,7 @@ export default function FilesPage() {
         return;
       }
       
-      console.log("Fetching files using token");
+      console.log("Fetching files using token", token);
       const response = await fetch(`http://localhost:3001/api/files?token=${token}`);
       const data = await response.json();
       

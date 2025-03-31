@@ -31,7 +31,7 @@ export default function AppointmentsPage() {
   // Add useEffect to retrieve token and fetch data on component mount
   useEffect(() => {
     // Get token from localStorage
-    const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem('rrtaxtoken');
     console.log("Retrieved token from localStorage:", storedToken);
     
     if (storedToken) {
