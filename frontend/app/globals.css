@@ -132,6 +132,10 @@ nav a:hover {
   background-color: #2aa3da;
 }
 
+.offset-top-232 {
+  margin-top: 98px;
+}
+
 /* Ensure logo stays 20px from the left */
 .logo {
   margin-left: 20px;

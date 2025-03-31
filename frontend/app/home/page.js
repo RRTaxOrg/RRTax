@@ -1,7 +1,30 @@
+'use client';
+
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
-export default function HomeTab({ currentImageIndex, nextImage, prevImage }) {
+export default function HomeTab() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 3);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Function to go to the next image
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 3);
+  };
+
+  // Function to go to the previous image
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + 3) % 3);
+  };
+
   return (
     <section id="home" className="tab-content active">
       <div className="carousel-container">
