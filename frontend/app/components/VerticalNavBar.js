@@ -2,8 +2,10 @@
 
 import Image from 'next/image';
 import '../styles/LoggedInPage.css';
+import { useRouter } from 'next/navigation';
 
 export default function VerticalNavigationBar({ navigateTo }) {
+  const router = useRouter();
   return (
     <nav className="vertical-nav">
       <div className="logo-container">
@@ -61,7 +63,7 @@ export default function VerticalNavigationBar({ navigateTo }) {
         className="logout-btn"
         onClick={(e) => {
           e.preventDefault();
-          navigateTo('/log_in');
+          router.push('/log_in');
         }}
       >
         Log Out

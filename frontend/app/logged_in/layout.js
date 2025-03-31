@@ -13,14 +13,12 @@ export default function LoggedInLayout({ children }) {
   };
 
   return (
-    <html lang="en">
-      <body className="flex min-h-screen">
-        {/* Vertical Navigation Bar */}
-        <VerticalNavigationBar navigateTo={navigateTo} />
-        
-        {/* Main Content Area */}
-        <main className="flex-grow p-6 bg-gray-50">{children}</main>
-      </body>
-    </html>
+    <>
+      {/* Vertical Navigation Bar */}
+      <VerticalNavigationBar navigateTo={navigateTo} />
+      
+      {/* Main Content Area */}
+      <main className="flex-grow p-6 bg-gray-50">{children}</main>
+    </>
   );
 }
