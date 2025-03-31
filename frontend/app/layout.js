@@ -6,6 +6,7 @@ import "./globals.css";
 import navImage from "../public/Logo_Improved_bg_removed.png";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,8 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootLayout({ children }) {
-  const router = useRouter();
-  // Define the navigateTo function
+  const router = useRouter();  // Define the navigateTo function
+  const pathname = usePathname(); // Get the current pathname
+  const isLoggedInPage = pathname?.startsWith('/logged_in'); // Check if the current route is under `logged_in`
   const navigateTo = (path) => {
     router.push(path);
   };
@@ -27,6 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {!isLoggedInPage && ( //Only show navigation bar if not on logged_in page
         <header>
           <nav>
             <Image src={navImage} alt="Logo" width={200} height={200}/>
@@ -50,6 +53,7 @@ export default function RootLayout({ children }) {
             <button className="login-btn" onClick={(e) => {e.preventDefault(); navigateTo("/log_in");}}>Login</button>
           </nav>
         </header>
+        )}
         {children}
         <footer>
           <p>© 2025 RRTax Incorporated</p>

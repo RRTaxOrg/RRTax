@@ -242,9 +242,7 @@ export default function LoggedInPage() {
           {activeTab === 'account-settings' && <AccountSettingsPage user={user} />}
         
       </div>
-      <footer>
-        <p>© 2025 RRTax Incorporated</p>
-      </footer>
+     
     </div>
   );
 }
