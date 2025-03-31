@@ -1,8 +1,9 @@
 'use client';
 
+//Imported necessary React hooks and icons
 import { useState } from "react";
 import { ChevronDownIcon, UserCircleIcon, EnvelopeIcon, PhoneIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
-import map from '../../public/map.png';
+import map from '../../public/map.png';// Imported the Map Image 
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
@@ -25,20 +26,26 @@ export default function ContactUs() {
    // setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //Form Submission Handler
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("Sending...");
+    e.preventDefault(); // Used to prevent the dafualt Submission
+    setStatus("Sending..."); // 
     try {
+
+      // Send the Form Info to API endpoint
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
+      // Show Success message and reset the form
       if (res.ok) {
-        setStatus("Message sent successfully!");
+        setStatus("Message sent successfully!"); 
         setFormData({ name: "", email: "", phone: "", message: "" });
-      } else {
+      } 
+      // Server Error
+      else {
         setStatus("Failed to send message.");
       }
     } catch (error) {
@@ -47,9 +54,13 @@ export default function ContactUs() {
   };
 
   return ( 
+    //Background of page
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50 mt-20">
+     
+     {/* Main Section for Contact form */}
       <div className="isolate px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
+          {/*Header Section */}
           <div className="mb-12">
             <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">
               Get in Touch
@@ -61,8 +72,10 @@ export default function ContactUs() {
           </div>
         </div>
 
+          {/* Contact Form */}
         <form onSubmit={handleSubmit} className="mx-auto max-w-xl bg-white rounded-2xl shadow-xl p-8 sm:p-12">
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+           {/* Name input field */}
             <div className="relative">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 <UserCircleIcon className="h-5 w-5 inline-block mr-1 text-customBlue" />
@@ -79,7 +92,7 @@ export default function ContactUs() {
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
             </div>
-
+            {/* Email input field (spans two columns) */}
             <div className="sm:col-span-2">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 <EnvelopeIcon className="h-5 w-5 inline-block mr-1 text-customBlue" />
@@ -96,7 +109,7 @@ export default function ContactUs() {
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
             </div>
-
+             {/* Phone number input field */}
             <div className="sm:col-span-2">
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 <PhoneIcon className="h-5 w-5 inline-block mr-1 text-customBlue" />
@@ -114,6 +127,8 @@ export default function ContactUs() {
 />
             </div>
 
+
+             {/* Message textarea field (spans two columns) */}
             <div className="sm:col-span-2">
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                 <ChatBubbleLeftIcon className="h-5 w-5 inline-block mr-1 text-customBlue" />
@@ -129,7 +144,8 @@ export default function ContactUs() {
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
             </div>
-
+ 
+            {/* Submit button and status message */}
             <div className="sm:col-span-2">
               <button
                 type="submit"
@@ -137,6 +153,7 @@ export default function ContactUs() {
               >
                 Send Message
               </button>
+              {/*Color Changing button based on status */}
               {status && (
                 <p className={`mt-4 text-center text-sm font-medium ${
                   status.includes("success") ? "text-green-600" : "text-red-600"
