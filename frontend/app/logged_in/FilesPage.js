@@ -21,7 +21,7 @@ export default function FilesPage() {
   const fetchFiles = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('userRRTAXToken');
+      const token = localStorage.getItem('rrtaxtoken');
       
       if (!token) {
         setError("Not authenticated. Please log in again.");

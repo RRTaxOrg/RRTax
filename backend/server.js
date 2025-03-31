@@ -151,13 +151,13 @@ app.get("/user/", async function(req, res) {
         res.send(JSON.stringify({code: "3"}));
     }
     else {
-      var userId = authSession(payload.token);
+      var userId = await authSession(payload.token);
 
       if (!userId) {
           res.send(JSON.stringify({code: "2"}));
       }
       else {
-        var user = getRow("./databases/main.db", "users", {uid: userId});
+        var user = await getRow("./databases/main.db", "users", {uid: userId});
         if (!user) {
             console.log("Failed to fetch user");
             res.send(JSON.stringify({code: "1"}));
@@ -424,7 +424,7 @@ app.post("/appointment/create", async function(req, res){
         return res.status(400).send(JSON.stringify({code: "3", message: "Missing required appointment data"}));
     }
 
-    var userId = authSession(payload.token);
+    var userId = await authSession(payload.token);
 
     if (!userId) {
         console.log("Invalid Session");
@@ -442,7 +442,7 @@ app.post("/appointment/create", async function(req, res){
     // Format time based on column type
     let timeValue = payload.time;
 
-    var result = insertInto("./databases/main.db", "appointments", {user_id: userId, time: timeValue});
+    var result = await insertInto("./databases/main.db", "appointments", {user_id: userId, time: timeValue});
     if (result == 0) {
         console.log("Appointment created successfully");
         res.send(JSON.stringify({code: "0"}));
@@ -465,7 +465,7 @@ app.delete("/appointment/delete", async function(req, res) {
     }
 
     // Convert user_id and appointment_id to INTEGER to avoid datatype mismatch
-    const userIdInt = authSession(payload.token);
+    const userIdInt = await authSession(payload.token);
     const appointmentIdInt = parseInt(payload.appointment_id);
 
     if (!userIdInt || !appointmentIdInt) {
@@ -473,7 +473,7 @@ app.delete("/appointment/delete", async function(req, res) {
         return res.status(400).send(JSON.stringify({code: "2", message: "Invalid token or appointment"}));
     }
 
-    var result = deleteRow("./databases/main.db", "appointments", {appointment_id: appointmentIdInt, user_id: userIdInt})
+    var result = await deleteRow("./databases/main.db", "appointments", {appointment_id: appointmentIdInt, user_id: userIdInt})
     res.send(JSON.stringify({code: "0", message: "Appointment deleted successfully"}));
 
 });
@@ -490,7 +490,7 @@ app.get("/appointments/", async function(req, res){
         return res.status(400).send(JSON.stringify({code: "3", message: "Missing user token"}));
     }
 
-    var userId = authSession(userToken);
+    var userId = await authSession(userToken);
 
     if (!userId) {
         console.log("Invalid Session");
@@ -498,8 +498,12 @@ app.get("/appointments/", async function(req, res){
     }
     
     // Get appointments for this user, using the correct column structure
-    const appointments = getRow("./databases/main.db", "appointments", {user_id: userId});
+    var appointments = await getRow("./databases/main.db", "appointments", {user_id: userId});
     
+    if (appointments == null) {
+      appointments = [];
+    }
+
     console.log(`Found ${appointments.length} appointments for user ID ${userId}`);
     res.send(JSON.stringify({code: "0", appointments: appointments}));
 });
