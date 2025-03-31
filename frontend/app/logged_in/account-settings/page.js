@@ -14,46 +14,22 @@ export default function AccountSettingsPage() {
     numberOfChildren: '',
   });
 
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
-  // Function to fetch user data using the token
-  const fetchUserData = async () => {
-    console.log("Fetching user data");
-    try {
-      setLoading(true);
-      console.log("Fetching user data for token:", token);
-      
-      const response = await fetch(`http://localhost:3001/user/?token=${token}`);
-      const data = await response.json();
-      
-      console.log("User data response:", data);
-      
-      if (data.code == "0" && data.user) {
-        setUser(data.user);
-        console.log("User found with UID:", data.user.uid);
-        // Now fetch appointments for this user
-        fetchAppointments(token);
-      } else {
-        setError("Could not retrieve user data");
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      setError("Error retrieving user data");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Add useEffect to retrieve token and fetch data on component mount
   useEffect(() => {
-    if (user && user.data) {
-      try {
-        const userData = JSON.parse(user.data);
-        setFormData(userData);
-      } catch (error) {
-        console.error('Error parsing user data:', error);
-      }
+    // Get token from localStorage
+    const storedToken = localStorage.getItem('rrtaxtoken');
+    console.log("Retrieved token from localStorage:", storedToken);
+    
+    if (storedToken) {
+      setToken(storedToken);
+    } else {
+      setLoading(false);
+      setError("No authentication token found. Please log in again.");
     }
-  }, [user]);
+  }, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,7 +43,7 @@ export default function AccountSettingsPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ user_id: user.uid, ...formData }),
+        body: JSON.stringify({ token: token, ...formData }),
       });
 
       const data = await response.json();
