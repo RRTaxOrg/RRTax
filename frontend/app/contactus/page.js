@@ -88,6 +88,7 @@ export default function ContactUs() {
               autoComplete="given-name"
               value={formData.name}
               onChange={handleChange}
+              placeholder="John Doe"
               required
                 className="mt-1 block w-full rounded-lg border border-gray-500 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
@@ -105,6 +106,7 @@ export default function ContactUs() {
               autoComplete="email"
               value={formData.email}
               onChange={handleChange}
+              placeholder="4eM0S@example.com"
               required
                 className="mt-1 block w-full rounded-lg border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
@@ -122,6 +124,7 @@ export default function ContactUs() {
                 autoComplete="tel"
                 value={formData.phone}
                 onChange={handleChange}
+                placeholder="(123) 456-7890"
                 required
                 className="mt-1 block w-full rounded-lg border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
@@ -140,6 +143,7 @@ export default function ContactUs() {
                 rows={4}
                 value={formData.message}
                 onChange={handleChange}
+                placeholder="Type your message here..."
                 required
                 className="mt-1 block w-full rounded-lg border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
@@ -175,9 +179,9 @@ export default function ContactUs() {
             className="w-full h-64 md:h-96 object-cover rounded-xl shadow-xl border-2 border-gray-200"
           />
           <div className="absolute inset-0 rounded-xl bg-black bg-opacity-10 flex items-center justify-center">
-            <div className="bg-white bg-opacity-80 px-6 py-4 rounded-lg">
+            <button className="bg-white bg-opacity-80 px-6 py-4 rounded-lg" onClick={ () => window.open("https://maps.app.goo.gl/aA4scFrd15PkYzSc9", "_blank")}>
               <h3 className="text-lg md:text-xl font-bold text-customBlue">Find Us Here</h3>
-            </div>
+            </button>
           </div>
         </div>
       </div>

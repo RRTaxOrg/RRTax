@@ -98,7 +98,7 @@ export default function LoginPage() {
   return (
     <section id="log_in" className="tab-content active">
       <div className="flex items-center justify-center bg-customWhite offset-top-232">
-        <div className="flex flex-col items-center w-full max-w-md space-y-8">
+        <div className="flex flex-col items-center w-full max-w-md space-y-8 mb-16">
           <Image src="/Logo_Improved_bg_removed.png" alt="Logo" width={500} height={500} />
           <div className="w-full p-8 space-y-8 bg-white rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-center text-customBlue">{isSignUp ? "Sign Up" : "Login"}</h2>
