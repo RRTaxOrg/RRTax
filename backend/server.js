@@ -231,8 +231,10 @@ app.post("/api/files/upload", upload.single("file"), async (req, res) => {
 
 // Get user's files
 app.get("/api/files", async (req, res) => {
-  const token = req.query.token;
-
+  const payload = req.query;
+  const token = payload.token;
+  console.log("GET FILES");
+  console.log(payload);
   if (!token) {
     return res.status(400).json({ code: "3", message: "Missing token" });
   }

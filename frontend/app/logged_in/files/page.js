@@ -63,7 +63,7 @@ export default function FilesPage() {
       return;
     }
 
-    const token = localStorage.getItem('userRRTAXToken');
+    const token = localStorage.getItem('rrtaxtoken');
     if (!token) {
       setError("Not authenticated. Please log in again.");
       return;
@@ -108,7 +108,7 @@ export default function FilesPage() {
   
   // Handle file download
   const handleDownload = async (fileId) => {
-    const token = localStorage.getItem('userRRTAXToken');
+    const token = localStorage.getItem('rrtaxtoken');
     if (!token) {
       setError("Not authenticated. Please log in again.");
       return;
@@ -132,7 +132,7 @@ export default function FilesPage() {
   
   // Delete file
   const handleDelete = async (fileId) => {
-    const token = localStorage.getItem('userRRTAXToken');
+    const token = localStorage.getItem('rrtaxtoken');
     if (!token) {
       setError("Not authenticated. Please log in again.");
       return;
