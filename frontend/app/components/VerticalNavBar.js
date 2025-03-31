@@ -63,8 +63,8 @@ export default function VerticalNavigationBar({ navigateTo }) {
         className="logout-btn"
         onClick={(e) => {
           e.preventDefault();
-          router.push('/log_in');
           localStorage.removeItem('rrtaxtoken');
+          router.push('/log_in');
         }}
       >
         Log Out

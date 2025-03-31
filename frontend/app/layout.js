@@ -5,7 +5,7 @@ import Image from "next/image";
 import "./globals.css";
 import navImage from "../public/Logo_Improved_bg_removed.png";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
@@ -22,6 +22,25 @@ export default function RootLayout({ children }) {
   const router = useRouter();  // Define the navigateTo function
   const pathname = usePathname(); // Get the current pathname
   const isLoggedInPage = pathname?.startsWith('/logged_in'); // Check if the current route is under `logged_in`
+  
+  const [targetPage, setTargetPage] = useState("log_in");
+  const [buttonText, setButtonText] = useState("Log In");
+
+  var token = null;
+
+  // Fetch user data on component mount
+    useEffect(() => {
+      console.log("RUNNING INITIALIZATION");
+      token = localStorage.getItem('rrtaxtoken');
+      if (token != null) {
+        setTargetPage("logged_in/dashboard");
+        setButtonText("Dashboard");
+      }
+  
+      // Get user data including uid from token
+      //fetchUserData();
+    }, []);
+
   const navigateTo = (path) => {
     router.push(path);
   };
@@ -50,7 +69,7 @@ export default function RootLayout({ children }) {
                 <a onClick={(e) => {e.preventDefault(); navigateTo("/contactus");}}>Contact Us</a>
               </li>
             </ul>
-            <button className="login-btn" onClick={(e) => {e.preventDefault(); navigateTo("/log_in");}}>Login</button>
+            <button className="login-btn" onClick={(e) => {e.preventDefault(); navigateTo("/" + targetPage);}}>{buttonText}</button>
           </nav>
         </header>
         )}

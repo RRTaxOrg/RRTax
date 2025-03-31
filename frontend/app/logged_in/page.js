@@ -6,8 +6,6 @@ import '../styles/LoggedInPage.css';
 export default function LoggedInPage() {
   const router = useRouter();
   var token = null;
-  const [activeTab, setActiveTab] = useState('dashboard');
-
   // Fetch user data on component mount
   useEffect(() => {
     console.log("RUNNING INITIALIZATION");
