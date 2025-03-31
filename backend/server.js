@@ -419,7 +419,7 @@ app.post("/appointment/create", async function(req, res){
     var payload = req.query;
     console.log("Received appointment creation request:", payload);
 
-    if (!(payload.user_id && payload.time && payload.token)) {
+    if (!(payload.time && payload.token)) {
         console.log("Missing appointment data");
         return res.status(400).send(JSON.stringify({code: "3", message: "Missing required appointment data"}));
     }
@@ -499,7 +499,7 @@ app.get("/appointments/", async function(req, res){
     
     // Get appointments for this user, using the correct column structure
     var appointments = await getRow("./databases/main.db", "appointments", {user_id: userId});
-    
+    console.log(appointments);
     if (appointments == null) {
       appointments = [];
     }

@@ -79,7 +79,7 @@ function getRow(DBPath, table, selectData) {
     var rows;
     try {
         var db = new database(DBPath);
-        rows = db.prepare(`SELECT * FROM ${table} WHERE ${selectInfo}`).get();
+        rows = db.prepare(`SELECT * FROM ${table} WHERE ${selectInfo}`).all();
         db.close();
     } catch (error) {
         return error;

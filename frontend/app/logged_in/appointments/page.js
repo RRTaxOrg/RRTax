@@ -122,15 +122,8 @@ export default function AppointmentsPage() {
       
       console.log("Creating appointment with token:", token);
 
-      const response = await fetch('http://localhost:3001/appointment/create/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token: token, // Ensure it's an integer
-          time: unixTime      // Send as string to handle TEXT column type
-        }),
+      const response = await fetch(`http://localhost:3001/appointment/create/?token=${token}&time=${time}`, {
+        method: "POST"
       });
       
       const data = await response.json();
@@ -143,7 +136,7 @@ export default function AppointmentsPage() {
         fetchAppointments(token);
         setError(''); // Clear any errors
       } else {
-        setError(`Failed to create appointment: ${data.error || "Unknown error"}`);
+        setError(`Failed to create appointment: ${data.message || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Error creating appointment:", error);
@@ -341,7 +334,7 @@ export default function AppointmentsPage() {
         <h1 className="text-2xl font-bold text-center text-customBlue mb-4">Your Appointments</h1>
         
         {user ? (
-          <p className="text-gray-700 mb-4">Welcome, {user.username || email}</p>
+          <p className="text-gray-700 mb-4">Welcome, {user.username || ""}</p>
         ) : loading ? (
           <p className="text-gray-500 text-center">Loading user data...</p>
         ) : (
