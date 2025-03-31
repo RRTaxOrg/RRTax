@@ -30,7 +30,7 @@ export default function LoginPage() {
 
     // Create a new user
     try {
-      const signupResponse = await fetch(`http://localhost:3001/signup/?email=${email}&password=${hashedPassword}&salt=${salt}&username=${username}&data=testdata`);
+      const signupResponse = await fetch(`http://localhost:3001/signup/?email=${email}&password=${hashedPassword}&salt=${salt}&username=${username}&data={}`);
       const signupData = await signupResponse.json();
       console.log(signupData);
 
