@@ -64,6 +64,7 @@ export default function VerticalNavigationBar({ navigateTo }) {
         onClick={(e) => {
           e.preventDefault();
           router.push('/log_in');
+          localStorage.removeItem('rrtaxtoken');
         }}
       >
         Log Out
