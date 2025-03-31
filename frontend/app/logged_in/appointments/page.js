@@ -10,6 +10,7 @@ export default function AppointmentsPage() {
   const [time, setTime] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [token, setToken] = useState(''); // Add token state
   
   const [rescheduleMode, setRescheduleMode] = useState(false);
   const [rescheduleAppointment, setRescheduleAppointment] = useState(null);
@@ -26,6 +27,27 @@ export default function AppointmentsPage() {
     
     return () => clearInterval(interval);
   }, []);
+  
+  // Add useEffect to retrieve token and fetch data on component mount
+  useEffect(() => {
+    // Get token from localStorage
+    const storedToken = localStorage.getItem('token');
+    console.log("Retrieved token from localStorage:", storedToken);
+    
+    if (storedToken) {
+      setToken(storedToken);
+    } else {
+      setLoading(false);
+      setError("No authentication token found. Please log in again.");
+    }
+  }, []);
+  
+  // Add useEffect to fetch user data when token is available
+  useEffect(() => {
+    if (token) {
+      fetchUserData();
+    }
+  }, [token]);
   
   // Function to fetch user data using the token
   const fetchUserData = async () => {
