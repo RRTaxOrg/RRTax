@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDownIcon, UserCircleIcon, EnvelopeIcon, PhoneIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
+import map from '../../public/map.png';
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
@@ -148,6 +149,21 @@ export default function ContactUs() {
         </form>
       </div>
       
+      {/* Map Image at the bottom of the page */}
+      <div className="w-full px-4 md:px-8 lg:px-16 pb-12">
+        <div className="relative mx-auto max-w-6xl">
+          <img 
+            src={map.src} 
+            alt="Location Map" 
+            className="w-full h-64 md:h-96 object-cover rounded-xl shadow-xl border-2 border-gray-200"
+          />
+          <div className="absolute inset-0 rounded-xl bg-black bg-opacity-10 flex items-center justify-center">
+            <div className="bg-white bg-opacity-80 px-6 py-4 rounded-lg">
+              <h3 className="text-lg md:text-xl font-bold text-customBlue">Find Us Here</h3>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 
