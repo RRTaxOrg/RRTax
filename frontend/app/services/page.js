@@ -115,6 +115,37 @@ export default function ServicesTab() {
         <br></br>
         
         <br></br>
+                  
+          {/* Appointments Section */}
+          <div className="body bg-[#F6F4F0]">
+              <br></br>
+              <motion.h1
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7 }}
+                  className="text-3xl font-bold text-black">Schedule an Appointment</motion.h1>
+              <motion.p
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9 }}
+                  className="text-lg mt-4 mb-6 text-black">Use our online calendar to schedule a consultation with one of our tax professionals. 
+                  Select a convenient date and time that works for you.</motion.p>
+              
+              <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9 }}
+                  className="calendar-container">
+                  {/* Google Calendar Appointment Scheduling */}
+                  <iframe 
+                      src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2oh5y4egDW6kbYz6OU8QtnxO91qMG8n6EpaxeAlhLhz7bIAVbvrZGJOXL87feF1TdfvniqUeEA?gv=true" 
+                      style={{ border: 0 }} 
+                      width="100%" 
+                      height="600" 
+                      frameBorder="0">
+                  </iframe>
+              </motion.div>
+          </div>
       </div>
     </section>
   );
