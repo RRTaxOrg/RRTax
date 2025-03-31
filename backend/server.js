@@ -63,7 +63,7 @@ app.get("/salt/", async function(req, res){
         res.send(JSON.stringify({code: "3"}))
     }
 
-    var user = getRow("./databases/main.db", "users", {email: payload.email});
+    var user = getRow("./databases/main.db", "users", {email: payload.email})[0];
 
     if (!user) {
         res.send(JSON.stringify({code: "1"}));
@@ -82,7 +82,7 @@ app.get("/signin/", async function(req, res){
         res.send(JSON.stringify({code: "3"}))
     }
     
-    var user = getRow("./databases/main.db", "users", {email: payload.email});
+    var user = getRow("./databases/main.db", "users", {email: payload.email})[0];
 
     if (!user) {
         res.send(JSON.stringify({code: "1"}));
@@ -120,7 +120,7 @@ app.get("/signup/", async function(req, res){
     }
     else {
         console.log("User created successfully");
-        var user = getRow("./databases/main.db", "users", {email: payload.email});
+        var user = getRow("./databases/main.db", "users", {email: payload.email})[0];
         var token = await createSession(user.uid);
         res.send(JSON.stringify({"code": "0", "token": token}))
     }
@@ -151,13 +151,14 @@ app.get("/user/", async function(req, res) {
         res.send(JSON.stringify({code: "3"}));
     }
     else {
+      console.log(payload);
       var userId = await authSession(payload.token);
 
       if (!userId) {
           res.send(JSON.stringify({code: "2"}));
       }
       else {
-        var user = await getRow("./databases/main.db", "users", {uid: userId});
+        var user = await getRow("./databases/main.db", "users", {uid: userId})[0];
         if (!user) {
             console.log("Failed to fetch user");
             res.send(JSON.stringify({code: "1"}));
@@ -455,7 +456,7 @@ app.post("/appointment/create", async function(req, res){
 
 // Deletes an appointment by appointment_id and token
 // Return codes: 0 - appointment deleted successfully, 1 - appointment not found, 2 - Invalid token, 3 - Info missing
-app.delete("/appointment/delete", async function(req, res) {
+app.post("/appointment/delete", async function(req, res) {
     var payload = req.query;
     console.log("Received appointment deletion request:", payload);
 

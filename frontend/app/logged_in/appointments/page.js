@@ -122,7 +122,7 @@ export default function AppointmentsPage() {
       
       console.log("Creating appointment with token:", token);
 
-      const response = await fetch(`http://localhost:3001/appointment/create/?token=${token}&time=${time}`, {
+      const response = await fetch(`http://localhost:3001/appointment/create/?token=${token}&time=${unixTime}`, {
         method: "POST"
       });
       
@@ -156,15 +156,8 @@ export default function AppointmentsPage() {
     try {
       setLoading(true);
 
-      const response = await fetch('http://localhost:3001/appointment/delete', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token: token, // Ensure it's an integer
-          appointment_id: appointmentId
-        }),
+      const response = await fetch(`http://localhost:3001/appointment/delete?token=${token}&appointment_id=${appointmentId}`, {
+        method: 'POST'
       });
 
       const data = await response.json();
