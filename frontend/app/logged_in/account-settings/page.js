@@ -1,6 +1,8 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 
-export default function AccountSettingsPage({ user }) {
+export default function AccountSettingsPage() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -11,6 +13,36 @@ export default function AccountSettingsPage({ user }) {
     maritalStatus: '',
     numberOfChildren: '',
   });
+
+  const [user, setUser] = useState(null);
+
+  // Function to fetch user data using the token
+  const fetchUserData = async () => {
+    console.log("Fetching user data");
+    try {
+      setLoading(true);
+      console.log("Fetching user data for token:", token);
+      
+      const response = await fetch(`http://localhost:3001/user/?token=${token}`);
+      const data = await response.json();
+      
+      console.log("User data response:", data);
+      
+      if (data.code == "0" && data.user) {
+        setUser(data.user);
+        console.log("User found with UID:", data.user.uid);
+        // Now fetch appointments for this user
+        fetchAppointments(token);
+      } else {
+        setError("Could not retrieve user data");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setError("Error retrieving user data");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (user && user.data) {

@@ -1,4 +1,11 @@
-export default function LandingPage({ user }) {
+'use client';
+
+import { useEffect, useState } from 'react';
+
+export default function LandingPage() {
+
+   const [user, setUser] = useState(null);
+
   return (
     <div className="main-content flex flex-col min-h-screen bg-gray-50 mt-20 mb-20">
       <div className="w-full h-full flex-grow p-6 bg-white rounded-lg shadow-md">

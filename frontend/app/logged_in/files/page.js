@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import '../styles/FilesPage.css';
+import '../../styles/FilesPage.css';
 
 export default function FilesPage() {
   const [files, setFiles] = useState({ t4_t4a: [], education: [], other: [] });
