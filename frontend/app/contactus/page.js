@@ -89,7 +89,7 @@ export default function ContactUs() {
               value={formData.name}
               onChange={handleChange}
               required
-                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
+                className="mt-1 block w-full rounded-lg border border-gray-500 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
             </div>
             {/* Email input field (spans two columns) */}
@@ -106,7 +106,7 @@ export default function ContactUs() {
               value={formData.email}
               onChange={handleChange}
               required
-                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
+                className="mt-1 block w-full rounded-lg border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
             </div>
              {/* Phone number input field */}
@@ -123,7 +123,7 @@ export default function ContactUs() {
                 value={formData.phone}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
+                className="mt-1 block w-full rounded-lg border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
             </div>
 
@@ -141,7 +141,7 @@ export default function ContactUs() {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
+                className="mt-1 block w-full rounded-lg border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition duration-200 px-4 py-3 text-gray-900"
 />
             </div>
  
