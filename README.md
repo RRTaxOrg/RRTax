@@ -1,6 +1,7 @@
 ## Documentation and References
 
 - [Project Demo Video](https://youtu.be/inh3fe45IU8) - Exploratory meeting with the client
+- [Release Video](https://youtu.be/8rPo2IGFsuo) - Final review meeting with the client
 - [Detailed Project Documentation](https://docs.google.com/document/d/14BtTduTpBqOeJh-ErC-dOKVAOxjb6ydDlebsMnDQPdk/edit?usp=sharing) - Iteration 0 documentation
 - [Project Iterations](https://docs.google.com/document/d/1-yC-5RIfJptZdpvjzImHeZZbosF5RxowrzwsWx9dgu4/edit?usp=sharing) - see discription of each iteration
 - [Project User Stories](https://docs.google.com/document/d/1GtyKXkfuMz4ZqbVuffaSMqHt0vcx7LMGZqhZoOHn-G4/edit?tab=t.0) - Description of user stories and roles developing them
