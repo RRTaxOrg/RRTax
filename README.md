@@ -3,11 +3,13 @@
 - [Project Demo Video](https://youtu.be/inh3fe45IU8) - Exploratory meeting with the client
 - [Detailed Project Documentation](https://docs.google.com/document/d/14BtTduTpBqOeJh-ErC-dOKVAOxjb6ydDlebsMnDQPdk/edit?usp=sharing) - Iteration 0 documentation
 - [Project Iterations](https://docs.google.com/document/d/1-yC-5RIfJptZdpvjzImHeZZbosF5RxowrzwsWx9dgu4/edit?usp=sharing) - see discription of each iteration
+- [Project User Stories](https://docs.google.com/document/d/1GtyKXkfuMz4ZqbVuffaSMqHt0vcx7LMGZqhZoOHn-G4/edit?tab=t.0) - Description of user stories and roles developing them
 - [GitHub Repository](https://github.com/RRTaxOrg/RRTax) - Source code repository
 - [Log File](LogFile.txt) - Log file 
 - [Architecture Diagram](architecture_diagram.jpg) - Project Architecture Diagram
 - [UML Class Diagram](UMLClassDiagram.png) - UML Diagram
 - [Start Script](start_script.sh) - Project Starting Script
+
 
 
 
