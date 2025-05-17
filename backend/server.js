@@ -75,7 +75,7 @@ app.get("/salt/", async function(req, res){
 
 // Authenticates a user based off of email, and password fields
 // Return codes: 0 - user logged in successfully (returns token under "token" aswell), 1 - email not found, 2 - incorrect password, 3 - Info missing
-app.get("/signin/", async function(req, res){
+/* app.get("/signin/", async function(req, res){
     var payload = req.query;
 
     if (!(payload.email && payload.password)) {
@@ -96,11 +96,11 @@ app.get("/signin/", async function(req, res){
             res.send(JSON.stringify({code: "2"}));
         }
     }
-})
+}) */
 
 // Creates a new user based on email, username, password, salt, and data fields
 // Return codes: 0 - user created successfully (returns token under "token" aswell), 1 - email already in use, 2 - username already in use, 3 - Info missing
-app.get("/signup/", async function(req, res){
+/* app.get("/signup/", async function(req, res){
     res.set("Content-Type", "application/json");
 
     var payload = req.query;
@@ -124,11 +124,11 @@ app.get("/signup/", async function(req, res){
         var token = await createSession(user.uid);
         res.send(JSON.stringify({"code": "0", "token": token}))
     }
-})
+}) */
 
 // Log user out based off of token field
 // Return codes: 0 success, 3 - Info missing
-app.get("/logout/", async function(req, res){
+/* app.get("/logout/", async function(req, res){
     res.set("Content-Type", "application/json");
     var payload = req.query;
     
@@ -139,11 +139,11 @@ app.get("/logout/", async function(req, res){
     console.log(payload.token);
     await removeSession(payload.token);
     res.send(JSON.stringify({code: "0"}));
-})
+}) */
 
 // Get user info based off of token field
 // Return codes: 0 success, 1 - Failed to Fetch User, 2 - Invalid Session, 3 - Info missing
-app.get("/user/", async function(req, res) {
+/* app.get("/user/", async function(req, res) {
     res.set("Content-Type", "application/json");
     var payload = req.query;
     
@@ -172,10 +172,10 @@ app.get("/user/", async function(req, res) {
     }
 
     
-})
+}) */
 
 // Upload file
-app.post("/api/files/upload", upload.single("file"), async (req, res) => {
+/* app.post("/api/files/upload", upload.single("file"), async (req, res) => {
   console.log("Received upload request:", req.body, req.file);
   const { category } = req.body;
   const file = req.file;
@@ -227,10 +227,10 @@ app.post("/api/files/upload", upload.single("file"), async (req, res) => {
     console.error("Error uploading file:", error);
     res.status(500).json({ code: "1", message: error.message || "Server error" });
   }
-});
+}); */
 
 // Get user's files
-app.get("/api/files", async (req, res) => {
+/* app.get("/api/files", async (req, res) => {
   const payload = req.query;
   const token = payload.token;
   console.log("GET FILES");
@@ -293,7 +293,7 @@ app.get("/api/files", async (req, res) => {
     console.error("Error fetching files:", error);
     res.status(500).json({ code: "1", error: error.message });
   }
-});
+}); */
 
 // Download file
 app.get("/api/files/download", async (req, res) => {
