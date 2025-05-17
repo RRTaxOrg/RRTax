@@ -31,7 +31,7 @@ export default async function handler(
   try {
     await transporter.sendMail({
       from: email,
-      to: "diegoextraespaciodrive@gmail.com", //  email where to send the forms 
+      to: "laura.rrtax@gmail.com", //  email where to send the forms 
       subject: `New Contact Form Submission from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
     });
