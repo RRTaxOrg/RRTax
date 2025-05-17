@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from "next/navigation";
-import HomeTab from "./Home/page";
+import HomeTab from "./home/page";
 
 export default function Home() {
   const router = useRouter();
