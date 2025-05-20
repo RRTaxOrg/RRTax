@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
                 <a onClick={(e) => { e.preventDefault(); navigateTo("/aboutus"); }}>About Us</a>
               </li>
               <li>
-                <a onClick={(e) => { e.preventDefault(); navigateTo("/services"); }}>Services</a>
+                <a onClick={(e) => { e.preventDefault(); navigateTo("/services"); }}>Appointments</a>
               </li>
               <li>
                 <a onClick={(e) => { e.preventDefault(); navigateTo("/resources"); }}>Resources</a>
