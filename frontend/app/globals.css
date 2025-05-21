@@ -313,7 +313,7 @@ main {
 }
 
 .circle-container-services h1 {
-  margin-left: 10px;
+  margin-left: 0px;
   margin-right: 10px;
   font-family:'Times New Roman', Times, serif; /* Choose a modern font */
   font-size: 50px;
@@ -326,12 +326,18 @@ main {
 .services-lists-container {
   display: flex;
   justify-content: space-between;
+  max-width: 100vw;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .services-list {
   flex: 1;
   margin-right: 20px; /* Adjust the margin as needed */
-  margin-left: 20px;
+  margin-left: 2px;
+  max-width: 100vw;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .services-list:last-child {
@@ -446,7 +452,7 @@ nav ul {
   }
 
   .logo {
-      width: 100px !important;
+      width: 200px !important;
       height: auto !important;
     }
 
