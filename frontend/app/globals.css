@@ -8,6 +8,10 @@
   --foreground: #171717;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 /* General Body Styling */
 body {
   font-family: sans-serif;
@@ -20,6 +24,7 @@ body {
   color: #ffff;
   display: flex;
   flex-direction: column; /* Ensures elements stack vertically */
+  overflow-x: hidden;
 }
 
 body p {
@@ -105,6 +110,7 @@ nav ul {
   justify-content: center; /* Center tabs horizontally */
   flex-grow: 1; /* Ensures the tabs take available space */
   padding: 0;
+  gap: 2rem;
 }
 
 nav li {
@@ -335,12 +341,18 @@ main {
 .resources-lists-container {
   display: flex;
   justify-content: space-between;
+  max-width: 100vw;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .resources-list {
   flex: 1;
   margin-right: 20px; /* Adjust the margin as needed */
-  margin-left: 20px;
+  margin-left: 0px;
+  max-width: 100vw;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .resources-list:last-child {
@@ -401,4 +413,145 @@ footer {
   position: relative;
   bottom: 0;
   left:0;
+}
+
+/* Base styles for desktop */
+nav ul {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  header {
+    padding: 0.7rem 0;
+    min-height: 98px; /* Increase as needed, e.g., 70px or 80px */
+  }
+  
+  nav ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .calendar-container {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .logo {
+      width: 100px !important;
+      height: auto !important;
+    }
+
+  img {
+    width: 90% !important;
+    height: auto !important;
+  }
+}
+
+/* Hamburger button styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  z-index: 2000;
+  position: relative;
+}
+.hamburger span {
+  display: block;
+  width: 28px;
+  height: 4px;
+  margin: 4px 0;
+  background: #2E5077;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* Hide desktop nav on mobile, show hamburger */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none !important;
+  }
+  .hamburger {
+    display: flex !important;
+  }
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 86px;
+    right: 0px;
+    background: #F6F4F0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 1200;
+    padding: 1rem 2rem;
+    gap: 1rem;
+  }
+  .mobile-nav li {
+    margin: 0.5rem 0;
+    /* Optional: add spacing between buttons */
+  }
+  .mobile-nav a {
+    display: block;
+    background: #2E5077;
+    color: #F6F4F0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 0.7rem 1.2rem;
+    text-align: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .mobile-nav a:hover {
+    background: #2aa3da;
+    color: #fff;
+  }
+  nav {
+    position: relative;
+  }
+}
+
+/* Show desktop nav on desktop, hide hamburger and mobile nav */
+@media (min-width: 769px) {
+  .nav-links {
+    display: flex !important;
+  }
+  .hamburger, .mobile-nav {
+    display: none !important;
+  }
+}
+
+/* Make carousel fill the screen on mobile */
+@media (max-width: 768px) {
+  .carousel-container {
+    width: 100vw !important;
+    height: calc(100vh - 70px) !important; /* Adjust 70px if your header is taller */
+    margin-top: 70px !important;
+    padding: 0 !important;
+  }
+  .carousel {
+    width: 100vw !important;
+    height: 100% !important;
+  }
+  .carousel img {
+    width: 100vw !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
 }
